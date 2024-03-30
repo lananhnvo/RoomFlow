@@ -1,0 +1,365 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600&display=swap');
+
+:root{
+    --primary:#0077b6;
+    --secondary:#48cae4;
+    --black:#333;
+    --white:#fff;
+    --box-shadow: 0 .5rem 1rem rgba(0, 0, 0, 0.1);
+}
+
+*{
+    font-family: 'Poppins', sans-serif;
+    margin: 0; padding: 0;
+    box-sizing: border-box;
+    outline: none; border: none;
+    text-decoration: none;
+    text-transform: capitalize;
+    transition: .2s linear;
+}
+
+html{
+    font-size: 62.5%;
+    overflow-x: hidden;
+    scroll-padding-top: 9rem;
+    scroll-behavior: smooth;
+}
+
+html::-webkit-scrollbar{
+    width: .8rem;
+}
+
+html::-webkit-scrollbar-track{
+    background: transparent;
+}
+
+html::-webkit-scrollbar-thumb{
+    background: var(--primary);
+    border-radius: .5rem;
+}
+
+section{
+    padding: 5rem 7%;
+}
+
+.heading{
+    font-size: 4rem;
+    color: var(--primary);
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bolder;
+    margin-bottom: 3rem;
+}
+
+.btn{
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 1rem 3rem;
+    background: var(--primary);
+    border-radius: .5rem;
+    color: var(--white);
+    font-size: 1.7rem;
+    cursor: pointer;
+}
+
+.btn:hover{
+    background: var(--secondary);
+}
+
+/* header */
+
+.header{
+    position: fixed;
+    top: 0; left: 0; right: 10;
+    z-index: 1000;
+    background: var(--white);
+    box-shadow: var(--box-shadow);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2rem 9%;
+}
+
+.header .logo{
+    font-size: 2.5rem;
+    font-weight: bolder;
+    color: var(--black);
+}
+
+.header .logo i{
+    color: var(--primary);
+    padding-right: .5rem;
+}
+
+.header .navbar a{
+    font-size: 1.7rem;
+    color: var(--black);
+    margin: 0 1rem;
+}
+
+.header .navbar a:hover{
+    color: var(--primary);
+}
+
+.header .navbar .btn{
+    margin-top: 0;
+    color: var(--white);
+}
+
+.header .navbar .btn:hover{
+    color: var(--white);
+}
+
+
+/* availability */
+
+.availability form{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    background: #eee;
+    padding: 2rem;
+    border-radius: .5rem;
+}
+
+.availability form .box{
+    flex: 1 1 20rem;
+}
+
+.availability form .box p{
+    font-size: 2rem;
+    color: var(--primary);
+}
+
+.availability form .box .input{
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.8rem;
+    color: var(--black);
+    margin: 1rem 0;
+    border-radius: .5rem;
+}
+
+/* end */
+
+/* about */
+
+.about .row{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6rem;
+}
+
+.about .row .image{
+    flex: 1 1 30rem;
+}
+
+.about .row .image img{
+    width: 100%;
+}
+
+.about .row .content{
+    flex: 1 1 51rem;
+}
+
+.about .row .content h3{
+    font-size: 3.5rem;
+    color: var(--primary);
+    padding: 2rem 0;
+}
+
+.about .row .content p{
+    font-size: 1.6rem;
+    color: #666;
+    padding: 1rem 0;
+    line-height: 1.8;
+}
+
+/* end */
+
+/* services */
+
+.services .box-container{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem,1fr));
+    gap: 2rem;
+}
+
+.services .box-container .box{
+    text-align: center;
+}
+
+.services .box-container .box img{
+    height: 10rem;
+    margin-bottom: .7rem;
+}
+
+.services .box-container .box h3{
+    font-size: 1.7rem;
+    color: var(--black);
+    padding: .5rem 0;
+}
+
+/* end */
+
+/* reservation */
+
+.reservation form{
+    padding: 2rem;
+    border: .2rem solid rgba(0, 0, 0, 0.1);
+    border-radius: 1.5rem;
+}
+
+.reservation form .container{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+}
+
+.reservation form .container .box{
+    flex: 1 1 40rem;
+}
+
+.reservation form .container .box p{
+    font-size: 1.8rem;
+    color: var(--primary);
+}
+
+.reservation form .container .box .input{
+    font-size: 1.8rem;
+    width: 100%;
+    padding: 1rem 0;
+    margin: 1rem 0;
+    border-bottom: .2rem solid rgba(0, 0, 0, 0.1);
+    color: var(--black);
+}
+
+/* end */
+
+/* footer */
+
+.footer{
+    background: var(--secondary);
+}
+
+.footer .box-container{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+    gap: 1.5rem;
+}
+
+.footer .box-container .box h3{
+    font-size: 2.2rem;
+    padding: 1rem 0;
+    color: var(--primary);
+}
+
+.footer .box-container .box a{
+    font-size: 1.6rem;
+    display: block;
+    color: var(--white);
+    padding: 1rem 0;
+}
+
+.footer .box-container .box a i{
+    color: var(--primary);
+    padding-right: .5rem;
+}
+
+.footer .box-container .box a:hover{
+    color: var(--primary);
+}
+
+.footer .share{
+    padding-top: 2rem;
+    text-align: center;
+}
+
+.footer .share a{
+    color: var(--primary);
+    font-size: 2rem;
+    width: 5rem;
+    height: 5rem;
+    line-height: 5rem;
+    border-radius: 50%;
+    border: .1rem solid var(--primary);
+    margin: .3rem;
+}
+
+.footer .share a:hover{
+    color: var(--white);
+    background: var(--primary);
+    transform: rotate(360deg);
+}
+
+.footer .credit{
+    font-size: 2rem;
+    text-align: center;
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: .1rem solid rgba(0, 0, 0, 0.3);
+    color: var(--white);
+}
+
+.footer .credit span{
+    color: var(--primary);
+}
+
+/* end */
+
+
+
+/* media queries */
+
+@media (max-width:991px){
+
+    html{
+        font-size: 55%;
+    }
+
+    .header{
+        padding: 2rem 3rem;
+    }
+
+}
+
+@media (max-width: 768px){
+
+    .header .navbar{
+        position: absolute;
+        top: 110%; right: -110%;
+        width: 30rem;
+        box-shadow: var(--box-shadow);
+        background: var(--white);
+        border-radius: .5rem;
+    }
+
+    .header .navbar.active{
+        right: 2rem;
+        transition: .4s linear;
+    }
+
+    .header .navbar a{
+        font-size: 2rem;
+        margin: 2rem 2.5rem;
+        display: block;
+    }
+
+}
+
+@media (max-width: 450px){
+
+    html{
+        font-size: 50%;
+    }
+
+    .home .slide .content{
+        width: 30rem;
+    }
+
+    .home .slide .content h3{
+        font-size: 3rem;
+    }
+
+}
