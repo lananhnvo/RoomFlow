@@ -140,6 +140,10 @@ section{
     border-radius: .5rem;
 }
 
+.availability {
+    padding-top: 200px; 
+    margin-top: -80px; 
+}
 /* end */
 
 /* about */
@@ -174,6 +178,11 @@ section{
     color: #666;
     padding: 1rem 0;
     line-height: 1.8;
+}
+
+.about {
+    padding-top: 150px; 
+    margin-top: -80px; 
 }
 
 /* end */
