@@ -16,18 +16,19 @@
 
 <header class="header">
 
-    <a href="#" class="logo"> <i class="fas fa-hotel"></i> RoomFlow </a>
+    <a href="C:\Users\lehar\RoomFlow\src\main\webapp\index.html" class="logo"> <i class="fas fa-hotel"></i> <img src="C:\Users\lehar\RoomFlow\src\main\webapp\images\logoTransparent.png" alt="RoomFlow Logo"> </a>
   
     <nav class="navbar">
       <div class="right-aligned">
-      <a href="#about">about</a>
-      <a href="#availability" class="btn"> book room</a> <!-- change -->
+      <a href="C:\Users\lehar\RoomFlow\src\main\webapp\index.html">about</a>
+      <a href="C:\Users\lehar\RoomFlow\src\main\webapp\book.html" class="btn">book room</a>
+      <a href="C:\Users\lehar\RoomFlow\src\main\webapp\login.html" class="btn">log in</a>
       </div>
     </nav>
   
     <div id="menu-btn" class="fas fa-bars"></div>
   
-</header>
+  </header>
     
 <section class="availability">
 
@@ -42,49 +43,63 @@
         <p>check out <span>*</span></p>
         <input type="date" class="input">
       </div>
-  
       <div class="box">
-        <p>adults <span>*</span></p>
-        <select name="adults" id="" class="input">
-          <option value="1">1 adults</option>
-          <option value="2">2 adults</option>
-          <option value="3">3 adults</option>
-          <option value="4">4 adults</option>
-          <option value="5">5 adults</option>
-          <option value="6">6 adults</option>
+        <p>Hotel Chain <span>*</span></p>
+        <select name="Hotel Chain" id="hotelChain" class="input">
+          <option value="any">Any</option>
+          <option value="Jade Empire">Jade Empire (242 total rooms)</option>
+          <option value="Lotus Luxe">Lotus Luxe (264 total rooms)</option>
+          <option value="Mystica">Mystica (230 total rooms)</option>
+          <option value="Emporia">Emporia (170 total rooms)</option>
+          <option value="Celestia">Celestia (239 total rooms)</option>
+        </select>
+    </div>
+    
+      <div class="box">
+        <p>Category <span>*</span></p>
+        <select name="Category" id="" class="input">
+          <option value="any">Any</option>
+          <option value="Luxury">Luxury</option>
+          <option value="Mid-range">Mid-range</option>
+          <option value="Economy">Economy</option>
         </select>
       </div>
   
       <div class="box">
-        <p>children <span>*</span></p>
-        <select name="child" id="" class="input">
-          <option value="1">1 child</option>
-          <option value="2">2 child</option>
-          <option value="3">3 child</option>
-          <option value="4">4 child</option>
-          <option value="5">5 child</option>
-          <option value="6">6 child</option>
+        <p>Price ranges <span>*</span></p>
+        <select name="Price ranges" id="" class="input">
+          <option value="any">Any</option>
+          <option value="50-250">50-250</option>
+          <option value="250-500">250-500</option>
+          <option value="500-1000">500-1000</option>
         </select>
       </div>
   
       <div class="box">
-        <p>rooms <span>*</span></p>
-        <select name="rooms" id="" class="input">
-          <option value="1">1 rooms</option>
-          <option value="2">2 rooms</option>
-          <option value="3">3 rooms</option>
-          <option value="4">4 rooms</option>
-          <option value="5">5 rooms</option>
-          <option value="6">6 rooms</option>
+        <p>Area <span>*</span></p>
+        <select name="Area" id="area" class="input">
+          <option value="any">Any</option>
+        </select>
+      </div>
+    
+      <div class="box">
+        <p>Room Capacity <span>*</span></p>
+        <select name="Room Capacity" id="" class="input">
+          <option value="any">Any</option>
+          <option value="triple">Triple</option>
+          <option value="double">Double</option>
+          <option value="suite">Suite</option>
+          <option value="quad">Quad</option>
         </select>
       </div>
   
-      <input type="submit" value="check availability" class="btn">
+      <input type="button" value="Check Availability" class="btn" onclick="location.href='reservation.html';">
   
     </form>
   
 </section>
   
 <!-- end -->
+<script src="script.js"></script>
 </body>
 </html>

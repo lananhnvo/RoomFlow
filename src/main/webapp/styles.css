@@ -110,6 +110,13 @@ section{
     color: var(--white);
 }
 
+.header .logo img {
+    height: auto; 
+    width: auto; 
+    max-height: 50px; 
+    vertical-align: middle; 
+  }
+
 
 /* availability */
 
@@ -213,6 +220,10 @@ section{
 /* end */
 
 /* reservation */
+.reservation {
+    padding-top: 200px; 
+    margin-top: -80px; 
+}
 
 .reservation form{
     padding: 2rem;
@@ -317,7 +328,51 @@ section{
 
 /* end */
 
+/* Login */
+.login {
+    padding-top: 200px; 
+}
 
+.login-container {
+    width: 100%;
+    max-width: 400px; 
+
+    margin: auto; 
+    background: var(--white);
+    border-radius: 5px;
+    box-shadow: var(--box-shadow);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-container form {
+    width: 100%;
+}
+
+.login-container input[type="text"],
+.login-container input[type="password"],
+.login-container input[type="submit"] {
+    width: calc(100% - 20px); 
+    padding: 10px;
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    border-radius: .5rem;
+    font-size: 1.6rem;
+}
+
+.login-container input[type="submit"] {
+    background: var(--primary);
+    color: var(--white);
+    cursor: pointer;
+    border: none;
+}
+
+.login-container input[type="submit"]:hover {
+    background: var(--secondary);
+}
+/* end */
 
 /* media queries */
 
