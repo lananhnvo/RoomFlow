@@ -3,8 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <title>Employee View</title>
+    <link rel="stylesheet" href="styles.css">
+
 </head>
 <body>
+<!-- header -->
+
+<header class="header">
+
+    <a href="index.html" class="logo"> <i class="fas fa-hotel"></i> <img src="images/logoTransparent.png" alt="RoomFlow Logo"> </a>
+
+    <nav class="navbar">
+        <div class="right-aligned">
+            <a href="index.html">about</a>
+            <a href="book.html" class="btn">book room</a>
+            <a href="login.html" class="btn">log in</a>
+        </div>
+    </nav>
+
+    <div id="menu-btn" class="fas fa-bars"></div>
+
+</header>
+
+<!-- search section -->
+<section class="search-section">
+    <div class="search-title">
+        <h2>Search for Existing Booking</h2>
+    </div>
+
+    <div class="search-container">
+        <form action="/search" method="get">
+            <input type="text" placeholder="Booking ID" name="query">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+</section>
 
 </body>
 </html>
