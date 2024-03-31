@@ -22,6 +22,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 areaSelect.add(option);
             });
         }
+        const urlParams = new URLSearchParams(window.location.search);
+        const roomId = urlParams.get('roomId'); // Get roomId from URL
+        
+        if (roomId) {
+            // If there's a roomId, you can now use it to fetch room details or adjust the form
+            console.log('Booking for room ID:', roomId);
+            // Optionally, implement a function to handle room detail fetching or adjustments
+        }
     });
 });
 
@@ -187,7 +195,10 @@ function displayFilteredRooms(filteredRooms) {
 
 // Function to handle booking redirection
 window.bookRoom = function(roomId) {
+    console.log(roomId); // Add this to check the roomId value
     window.location.href = `reservation.html?roomId=${roomId}`;
 };
+
+
 
 
