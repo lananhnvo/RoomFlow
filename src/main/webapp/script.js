@@ -23,12 +23,9 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
         const urlParams = new URLSearchParams(window.location.search);
-        const roomId = urlParams.get('roomId'); // Get roomId from URL
-        
+        const { roomId } = getQueryParams();
         if (roomId) {
-            // If there's a roomId, you can now use it to fetch room details or adjust the form
-            console.log('Booking for room ID:', roomId);
-            // Optionally, implement a function to handle room detail fetching or adjustments
+            fetchRoomDetails(roomId);
         }
     });
 });
@@ -185,11 +182,36 @@ function displayFilteredRooms(filteredRooms) {
                 <p>AC: ${room.ac === 'True' ? 'Yes' : 'No'}</p>
             </div>
             <div class="book-now">
-                <button onclick="bookRoom(${room.room_id})">Book Now</button>
+                <button onclick="bookRoom('${room.room_id}')">Book Now</button>
             </div>
         `;
         resultsContainer.appendChild(roomElement);
     });
+}
+
+// Function to extract query parameters from the URL
+function getQueryParams() {
+    const params = new URLSearchParams(window.location.search);
+    return {
+        roomId: params.get('roomId') // Assuming 'roomId' is the query parameter
+    };
+}
+
+// Function to simulate fetching room details based on the roomId
+// This is a placeholder function. You should replace it with actual data fetching logic.
+function fetchRoomDetails(roomId) {
+    // Placeholder: Fetch room details based on roomId
+    // Simulating room details fetch with a static object
+    const roomDetails = rooms.find(room => room.room_id.toString() === roomId);
+    if (roomDetails) {
+        // Populate the form or display the details on the page
+        document.getElementById('hotelName').textContent = roomDetails.hotelName;
+        document.getElementById('roomPrice').textContent = `$${roomDetails.price}`;
+        document.getElementById('roomArea').textContent = roomDetails.area;
+        // Add more fields as necessary
+    } else {
+        console.error('Room details not found for ID:', roomId);
+    }
 }
 
 

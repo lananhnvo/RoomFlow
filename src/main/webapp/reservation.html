@@ -19,19 +19,20 @@
 
 <header class="header">
 
-    <a href="index.html" class="logo"> <i class="fas fa-hotel"></i> <img src="images/logoTransparent.png" alt="RoomFlow Logo"> </a>
-  
-    <nav class="navbar">
-      <div class="right-aligned">
-      <a href="index.html">about</a>
-      <a href="book.html" class="btn">book room</a>
-      <a href="login.html" class="btn">log in</a>
-      </div>
-    </nav>
-  
-    <div id="menu-btn" class="fas fa-bars"></div>
-  
-  </header>
+  <a href="index.html" class="logo"> <i class="fas fa-hotel"></i> <img src="images/logoTransparent.png" alt="RoomFlow Logo"> </a>
+
+  <nav class="navbar">
+    <div class="right-aligned">
+    <a href="index.html">about</a>
+    <a href="book.html" class="btn">book room</a>
+    <a href="login.html" class="btn">log in</a>
+    </div>
+  </nav>
+
+  <div id="menu-btn" class="fas fa-bars"></div>
+
+</header>
+
 <body>
     <section class="reservation" id="reservation">
 
@@ -60,52 +61,17 @@
               <p>check out <span>*</span></p>
               <input type="date" class="input">
             </div>
-      
+
             <div class="box">
-              <p>adults <span>*</span></p>
-              <select name="adults" class="input">
-                <option value="1">1 adults</option>
-                <option value="2">2 adults</option>
-                <option value="3">3 adults</option>
-                <option value="4">4 adults</option>
-                <option value="5">5 adults</option>
-                <option value="6">6 adults</option>
-              </select>
+              <p>Hotel Name: <span id="hotelName"></span></p>
             </div>
-      
+
             <div class="box">
-              <p>children <span>*</span></p>
-              <select name="child" class="input">
-                <option value="0">0 child</option>
-                <option value="1">1 child</option>
-                <option value="2">2 child</option>
-                <option value="3">3 child</option>
-                <option value="4">4 child</option>
-                <option value="5">5 child</option>
-                <option value="6">6 child</option>
-              </select>
+              <p>Price: <span id="roomPrice"></span></p>
             </div>
-      
+
             <div class="box">
-              <p>rooms <span>*</span></p>
-              <select name="rooms" class="input">
-                <option value="1">1 rooms</option>
-                <option value="2">2 rooms</option>
-                <option value="3">3 rooms</option>
-                <option value="4">4 rooms</option>
-                <option value="5">5 rooms</option>
-                <option value="6">6 rooms</option>
-              </select>
-            </div>
-      
-            <div class="box">
-              <p>room type <span>*</span></p>
-              <select name="type" class="input">
-                <option value="1">exclusive rooms</option>
-                <option value="2">family rooms</option>
-                <option value="3">daily rooms</option>
-                <option value="4">panoramic rooms</option>
-              </select>
+              <p>Area: <span id="roomArea"></span></p>
             </div>
       
           </div>
