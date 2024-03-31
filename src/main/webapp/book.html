@@ -31,12 +31,12 @@
   
       <div class="box">
         <p>check in <span>*</span></p>
-        <input type="date" class="input">
+        <input type="text" onfocus="(this.type='date')" onblur="(this.type='text')" placeholder="MM/DD/YYYY" class="input">
       </div>
   
       <div class="box">
         <p>check out <span>*</span></p>
-        <input type="date" class="input">
+        <input type="text" onfocus="(this.type='date')" onblur="(this.type='text')" placeholder="MM/DD/YYYY" class="input">
       </div>
       <div class="box">
         <p>Hotel Chain <span>*</span></p>
@@ -52,7 +52,7 @@
     
       <div class="box">
         <p>Category <span>*</span></p>
-        <select name="Category" id="" class="input">
+        <select name="Category" id="Category" class="input">
           <option value="any">Any</option>
           <option value="Luxury">Luxury</option>
           <option value="Mid-range">Mid-range</option>
@@ -62,11 +62,8 @@
   
       <div class="box">
         <p>Price ranges <span>*</span></p>
-        <select name="Price ranges" id="" class="input">
+        <select name="Price ranges" id="priceRanges" class="input">
           <option value="any">Any</option>
-          <option value="50-250">50-250</option>
-          <option value="250-500">250-500</option>
-          <option value="500-1000">500-1000</option>
         </select>
       </div>
   
@@ -79,16 +76,19 @@
     
       <div class="box">
         <p>Room Capacity <span>*</span></p>
-        <select name="Room Capacity" id="" class="input">
+        <select name="Room Capacity" id="roomCapacity" class="input">
           <option value="any">Any</option>
-          <option value="triple">Triple</option>
-          <option value="double">Double</option>
           <option value="suite">Suite</option>
           <option value="quad">Quad</option>
+          <option value="triple">Triple</option>
+          <option value="double">Double</option>
+          <option value="single">Single</option>
         </select>
       </div>
   
-      <input type="button" value="Check Availability" class="btn" onclick="location.href='reservation.html';">
+      <input type="button" value="Check Availability" class="btn" id="checkAvailability">
+
+      <div id="resultsContainer"></div>
   
     </form>
   

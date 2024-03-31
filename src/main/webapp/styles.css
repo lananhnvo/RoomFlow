@@ -118,7 +118,12 @@ section{
   }
 
 
-/* availability */
+/* availability  + book */
+
+.input[type="text"]::placeholder {
+    text-transform: uppercase;
+  }
+  
 
 .availability form{
     display: flex;
@@ -191,6 +196,64 @@ section{
     padding-top: 150px; 
     margin-top: -80px; 
 }
+
+/* end */
+
+/* Container for each room */
+
+/* Enhancing the Check Availability button */
+#checkAvailability {
+    background-color: var(--primary); /* Primary color for the button */
+    color: var(--white); /* Text color */
+    font-weight: 600; /* Makes the text slightly bolder */
+    letter-spacing: 1px; /* Slightly spaces out the letters */
+    border: none; /* Removes the default border */
+    cursor: pointer; /* Changes the cursor to a pointer to indicate it's clickable */
+    transition: background-color 0.3s ease; /* Smooth transition for the background color */
+    display: block; /* Ensures the button takes the full width */
+    width: 100%; /* Full width */
+    padding: 1.2rem; /* Ample padding for a larger click area */
+    margin-top: 2rem; /* Ensures there's space between the form fields and the button */
+    border-radius: 5px; /* Rounded corners */
+}
+
+#checkAvailability:hover {
+    background-color: var(--secondary); /* Changes background on hover for visual feedback */
+}
+
+#resultsContainer {
+    margin-top: 20px; /* Adds space above the results for clarity */
+    width: 100%;
+}
+
+.room {
+    font-size: 20px; /* Makes text larger */
+    margin-bottom: 20px; /* Adds space between results */
+    padding: 15px; /* Adds padding inside each result */
+    border: 1px solid #ccc; /* Adds a border around each result */
+    border-radius: 5px; /* Rounds the corners of the border */
+}
+
+.room-details {
+    margin-bottom: 10px; /* Adds space between the room details and the book now button */
+}
+
+.btn, .book-now button {
+    background-color: var(--primary); /* Primary color for button background */
+    color: var(--white); /* White text */
+    padding: 1rem 3rem; /* Uniform padding */
+    font-size: 1.7rem; /* Consistent font size */
+    border-radius: .5rem; /* Rounded corners */
+    cursor: pointer; /* Cursor pointer to indicate clickable */
+    border: none; /* No border */
+}
+
+.btn:hover, .book-now button:hover {
+    background-color: var(--secondary); /* Secondary color on hover */
+    color: var(--white); /* Ensuring text color remains white for visibility */
+}
+
+
 
 /* end */
 
