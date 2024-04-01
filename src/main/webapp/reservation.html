@@ -38,7 +38,7 @@
 
         <h1 class="heading">Confirm your reservation</h1>
       
-        <form action="">
+        <form id="reservationForm" action="">
       
           <div class="container">
       
@@ -49,34 +49,37 @@
       
             <div class="box">
               <p>email <span>*</span></p>
-              <input type="text" class="input" placeholder="Your Email">
+              <input type="text" id="emailInput" class="input" placeholder="Your Email">
             </div>
       
-            <div class="box">
-              <p>check in <span>*</span></p>
-              <input type="date" class="input">
-            </div>
+            <div class="date-fields">
+              <div class="box">
+                  <p>check in <span>*</span></p>
+                  <input type="date" name="check-in" class="input">
+              </div>
       
-            <div class="box">
-              <p>check out <span>*</span></p>
-              <input type="date" class="input">
+              <div class="box">
+                  <p>check out <span>*</span></p>
+                  <input type="date" name="check-out" class="input">
+              </div>
             </div>
 
             <div class="box">
-              <p>Hotel Name: <span id="hotelName"></span></p>
-            </div>
-
-            <div class="box">
+              <h2>Details:</h2>
               <p>Price: <span id="roomPrice"></span></p>
-            </div>
-
-            <div class="box">
+              <p>Hotel Name: <span id="hotelName"></span></p>
+              <p>Hotel Chain: <span id="hotelChain"></span></p>
               <p>Area: <span id="roomArea"></span></p>
+              <p>Capacity: <span id="roomCapacity"></span></p>
+              <p>Extendable: <span id="roomExtendable"></span></p>
+              <p>TV: <span id="roomTv"></span></p>
+              <p>Fridge: <span id="roomFridge"></span></p>
+              <p>AC: <span id="roomAc"></span></p>
             </div>
       
           </div>
       
-          <input type="submit" value="check availability" class="btn">
+          <input type="submit" value="Confirm reservation" class="btn">
       
         </form>
       

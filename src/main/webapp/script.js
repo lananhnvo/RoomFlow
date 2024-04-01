@@ -1,7 +1,20 @@
+// Mock data representing rooms. Replace with actual data retrieval method.
+const rooms = [
+    { hotel_id: 94, room_id: 953, hotelChain: 'Mystica', hotelName: 'Celestial Harmony', price: '295.72', area: 'Sector of Serenity', capacity: 'triple', extendable: 'True', problem: 'False', tv: 'True', fridge: 'False', ac: 'False' },
+    { hotel_id: 37, room_id: 2, hotelChain: 'Celestia', hotelName: 'Grand Inn', price: '735.77', area: 'Lanxia', capacity: 'double', extendable: 'False', problem: 'False', tv: 'False', fridge: 'False', ac: 'False' },
+    { hotel_id: 47, room_id: 288, hotelChain: 'Emporia', hotelName: 'Grand Plaza', price: '197.97', area: 'Eternal Gardens', capacity: 'double', extendable: 'False', problem: 'True', tv: 'False', fridge: 'False', ac: 'True' }, 
+    { hotel_id: 47, room_id: 288, hotelChain: 'Emporia', hotelName: 'Grand Plaza', price: '197.97', area: 'Eternal Gardens', capacity: 'double', extendable: 'False', problem: 'False', tv: 'False', fridge: 'False', ac: 'True' }, 
+    // Add more room objects with various attributes for demonstration
+];
+
 document.addEventListener('DOMContentLoaded', function() {
+    console.log("Script loaded and DOM fully loaded.");
+    
+    displayReservationDetails();
     document.getElementById('hotelChain').addEventListener('change', updateAreas);
     document.getElementById('Category').addEventListener('change', updatePriceRanges);
     document.getElementById('checkAvailability').addEventListener('click', filterRooms);
+    document.querySelector('form').addEventListener('submit', validateEmailAndSubmit);
     document.getElementById('hotelChain').addEventListener('change', function() {
         var areas = {
             'any' : ['Lanxia', 'Dreamscape Delta', 'Mystic Mountain', 'Enchantment Valley', 'Elysium Estate','Tower of Hope', 'Eternal Gardens', 'Monument of Peace', 'Liberty Square','Archive of Ages', 'Palace of Peace', 'Garden of Harmony', 'Fortress of Fortitude','Palace of Peace', 'Fortress of Fortitude', 'Temple of Tranquility', 'Garden of Harmony','Realm of Bliss', 'District of Delight', 'Sector of Serenity', 'Province of Pleasure'],
@@ -22,13 +35,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 areaSelect.add(option);
             });
         }
-        const urlParams = new URLSearchParams(window.location.search);
-        const { roomId } = getQueryParams();
-        if (roomId) {
-            fetchRoomDetails(roomId);
-        }
+        
     });
 });
+
 
 document.getElementById('Category').addEventListener('change', function() { // Removed the extra space in 'Category '
     var priceRange = {
@@ -49,14 +59,6 @@ document.getElementById('Category').addEventListener('change', function() { // R
         });
     }
 });
-
-// Mock data representing rooms. Replace with actual data retrieval method.
-const rooms = [
-    { hotel_id: 94, room_id: 953, hotelChain: 'Mystica', hotelName: 'Celestial Harmony', price: '295.72', area: 'Sector of Serenity', capacity: 'triple', extendable: 'True', problem: 'False', tv: 'True', fridge: 'False', ac: 'False' },
-    { hotel_id: 37, room_id: 2, hotelChain: 'Celestia', hotelName: 'Grand Inn', price: '735.77', area: 'Lanxia', capacity: 'double', extendable: 'False', problem: 'False', tv: 'False', fridge: 'False', ac: 'False' },
-    { hotel_id: 47, room_id: 288, hotelChain: 'Emporia', hotelName: 'Grand Plaza', price: '197.97', area: 'Eternal Gardens', capacity: 'double', extendable: 'False', problem: 'True', tv: 'False', fridge: 'False', ac: 'True' }, 
-    // Add more room objects with various attributes for demonstration
-];
 
 
 // Functions
@@ -182,44 +184,189 @@ function displayFilteredRooms(filteredRooms) {
                 <p>AC: ${room.ac === 'True' ? 'Yes' : 'No'}</p>
             </div>
             <div class="book-now">
-                <button onclick="bookRoom('${room.room_id}')">Book Now</button>
+                <button type='button' onclick="bookRoom('${room.room_id}')">Book Now</button>
             </div>
         `;
         resultsContainer.appendChild(roomElement);
     });
 }
 
-// Function to extract query parameters from the URL
-function getQueryParams() {
-    const params = new URLSearchParams(window.location.search);
-    return {
-        roomId: params.get('roomId') // Assuming 'roomId' is the query parameter
-    };
-}
-
-// Function to simulate fetching room details based on the roomId
-// This is a placeholder function. You should replace it with actual data fetching logic.
-function fetchRoomDetails(roomId) {
-    // Placeholder: Fetch room details based on roomId
-    // Simulating room details fetch with a static object
-    const roomDetails = rooms.find(room => room.room_id.toString() === roomId);
-    if (roomDetails) {
-        // Populate the form or display the details on the page
-        document.getElementById('hotelName').textContent = roomDetails.hotelName;
-        document.getElementById('roomPrice').textContent = `$${roomDetails.price}`;
-        document.getElementById('roomArea').textContent = roomDetails.area;
-        // Add more fields as necessary
+// Then we define the functions
+function displayReservationDetails() {
+    const queryParams = new URLSearchParams(window.location.search);
+    const roomId = queryParams.get('roomId');
+    const checkInDate = queryParams.get('checkIn');
+    const checkOutDate = queryParams.get('checkOut');
+    if (checkInDate) document.querySelector('input[name="check-in"]').value = checkInDate;
+    if (checkOutDate) document.querySelector('input[name="check-out"]').value = checkOutDate;
+    if (roomId) {
+        const roomDetails = rooms.find(room => room.room_id.toString() === roomId);
+        if (roomDetails) {
+            document.getElementById('hotelName').textContent = roomDetails.hotelName || 'Not available';
+            document.getElementById('roomPrice').textContent = `$${roomDetails.price}` || 'Not available';
+            document.getElementById('roomArea').textContent = roomDetails.area || 'Not available';
+            document.getElementById('hotelChain').textContent = roomDetails.hotelChain || 'Not available';
+            document.getElementById('roomCapacity').textContent = roomDetails.capacity || 'Not available';
+            document.getElementById('roomExtendable').textContent = roomDetails.extendable === 'True' ? 'Yes' : 'No';
+            document.getElementById('roomTv').textContent = roomDetails.tv === 'True' ? 'Yes' : 'No';
+            document.getElementById('roomFridge').textContent = roomDetails.fridge === 'True' ? 'Yes' : 'No';
+            document.getElementById('roomAc').textContent = roomDetails.ac === 'True' ? 'Yes' : 'No';
+            document.querySelector('input[name="check-in"]').value = checkInDate || '';
+            document.querySelector('input[name="check-out"]').value = checkOutDate || '';
+            document.getElementById('reservationForm').addEventListener('submit', handleReservationSubmit);
+            // ... add more fields if needed
+        } else {
+            console.error('No details found for room ID:', roomId);
+            // Optionally, display an error message on the page
+        }
     } else {
-        console.error('Room details not found for ID:', roomId);
+        console.error('No room ID specified in the URL.');
+        // Optionally, display an error message on the page
+    }
+}
+function validateEmailAndSubmit(event) {
+    const emailInput = document.getElementById('emailInput');
+    const email = emailInput.value;
+    if (!validateEmail(email)) {
+        event.preventDefault(); // Prevent form submission
+        alert('Please enter a valid email address.');
     }
 }
 
+// Helper function to validate email format
+function validateEmail(email) {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+}
 
-// Function to handle booking redirection
+function handleReservationSubmit(event) {
+    event.preventDefault(); // Prevent the default form submission
+
+    const emailInput = document.getElementById('emailInput');
+    const email = emailInput.value;
+    if (!validateEmail(email)) {
+        alert('Please enter a valid email address.');
+        return;
+    }
+    
+    // Generate a unique booking ID
+    const bookingId = generateBookingId();
+    
+    // Save the reservation details (email and booking ID for now) to localStorage
+    saveReservationDetails(bookingId, email);
+    
+    // Alert the user with the booking ID
+    alert(`Your booking has been confirmed. Your Booking ID is: ${bookingId}. Please keep this ID for future reference. We have also sent a copy to your email! Thank you! - RoomFlow`);
+    
+    // Here you might want to redirect the user or clear the form
+}
+
+// Helper function to save reservation details
+function saveReservationDetails(bookingId, email) {
+    const reservationDetails = { email, bookingId };
+    localStorage.setItem(`booking_${bookingId}`, JSON.stringify(reservationDetails));
+}
+
+// Helper function to generate a unique booking ID
+function generateBookingId() {
+    const timestamp = Date.now().toString();
+    const randomComponent = Math.floor(Math.random() * 1000).toString();
+    return `BID-${timestamp}-${randomComponent}`;
+}
+
+function searchBooking() {
+    const bookingId = document.getElementById('searchQuery').value;
+    const bookingDetails = localStorage.getItem(`booking_${bookingId}`);
+    const detailsContainer = document.getElementById('bookingDetails');
+
+    if (bookingDetails) {
+        const details = JSON.parse(bookingDetails);
+        detailsContainer.innerHTML = `
+            <p>Email: ${details.email}</p>
+            <p>Booking ID: ${details.bookingId}</p>
+            // Add more details as needed
+        `;
+        // Show edit and delete buttons
+        document.getElementById('editBooking').style.display = 'inline';
+        document.getElementById('deleteBooking').style.display = 'inline';
+    } else {
+        detailsContainer.innerHTML = `<p>No booking found with ID ${bookingId}.</p>`;
+        // Hide edit and delete buttons if no booking found
+        document.getElementById('editBooking').style.display = 'none';
+        document.getElementById('deleteBooking').style.display = 'none';
+    }
+}
+
+function editBooking(bookingId) {
+    // Placeholder for edit functionality
+    // You could redirect to a form or display a modal here
+    alert("Edit functionality for booking ID " + bookingId + " is not implemented in this demo.");
+}
+
+function deleteBooking(bookingId) {
+    if (confirm(`Are you sure you want to delete booking ID ${bookingId}?`)) {
+        localStorage.removeItem(`booking_${bookingId}`);
+        document.getElementById('bookingDetails').innerHTML = `<p>Booking ID ${bookingId} has been deleted.</p>`;
+        // Hide edit and delete buttons after deletion
+        document.getElementById('editBooking').style.display = 'none';
+        document.getElementById('deleteBooking').style.display = 'none';
+    }
+}
+
+function prepareEditForm() {
+    const bookingId = document.getElementById('searchQuery').value;
+    const bookingDetails = JSON.parse(localStorage.getItem(`booking_${bookingId}`));
+
+    if (bookingDetails) {
+        document.getElementById('editEmail').value = bookingDetails.email;
+        document.getElementById('editBookingId').value = bookingDetails.bookingId;
+        // Populate other fields as necessary
+
+        // Show edit form
+        document.getElementById('editBookingForm').style.display = 'block';
+    } else {
+        alert('No booking found to edit.');
+    }
+}
+
+function saveEditedBooking() {
+    const bookingId = document.getElementById('editBookingId').value;
+    const editedEmail = document.getElementById('editEmail').value;
+    // Retrieve other fields as necessary
+
+    // Construct the updated booking details object
+    const updatedBookingDetails = {
+        bookingId: bookingId,
+        email: editedEmail,
+        // Include other updated fields here
+    };
+
+    // Save updated details back to local storage
+    localStorage.setItem(`booking_${bookingId}`, JSON.stringify(updatedBookingDetails));
+    alert('Booking updated successfully.');
+
+    // Optionally, hide the edit form and refresh booking details
+    document.getElementById('editBookingForm').style.display = 'none';
+    searchBooking(); // Refresh the displayed booking details
+}
+
+// Event listener to call displayReservationDetails after the DOM is fully loaded
+document.addEventListener('DOMContentLoaded', displayReservationDetails);
+
 window.bookRoom = function(roomId) {
-    console.log(roomId); // Add this to check the roomId value
-    window.location.href = `reservation.html?roomId=${roomId}`;
+    const checkInDate = document.querySelector('input[name="check-in"]').value;
+    const checkOutDate = document.querySelector('input[name="check-out"]').value;
+
+    // Validate that both dates are selected before booking
+    if (!checkInDate || !checkOutDate) {
+        alert('Please select both check-in and check-out dates before booking.');
+        return;
+    }
+
+    // Redirect to the reservation page with roomId, checkIn, and checkOut as URL parameters
+    window.location.href = `reservation.html?roomId=${roomId}&checkIn=${checkInDate}&checkOut=${checkOutDate}`;
 };
+
 
 
 

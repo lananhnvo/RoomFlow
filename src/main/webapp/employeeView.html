@@ -25,19 +25,26 @@
 
 </header>
 
-<!-- search section -->
-<section class="search-section">
-    <div class="search-title">
-        <h2>Search for Existing Booking</h2>
-    </div>
+<!-- Search Section -->
+<form id="searchForm">
+    <input type="text" placeholder="Booking ID" id="searchQuery">
+    <button type="button" onclick="searchBooking()">Search</button>
+</form>
 
-    <div class="search-container">
-        <form action="/search" method="get">
-            <input type="text" placeholder="Booking ID" name="query">
-            <button type="submit">Search</button>
-        </form>
-    </div>
+<!-- Booking Details and Actions -->
+<section class="edit-section">
+    <div id="bookingDetails"></div>
+    <button id="editBooking" style="display:none;" onclick="prepareEditForm()">Edit Booking</button>
+    <button id="deleteBooking" style="display:none;" onclick="deleteBooking()">Delete Booking</button>
 </section>
+
+<!-- Edit Booking Form (Hidden Initially) -->
+<form id="editBookingForm" style="display:none;">
+    <input type="text" id="editEmail" placeholder="Email">
+    <input type="text" id="editBookingId" placeholder="Booking ID" readonly>
+    <!-- Add more fields as needed -->
+    <button type="button" onclick="saveEditedBooking()">Save Changes</button>
+</form>
 
 </body>
 </html>

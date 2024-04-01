@@ -256,7 +256,19 @@ section{
 
 
 /* end */
+/* Reservation */
+@media (min-width: 768px) {
+    .date-fields {
+        display: flex;
+        justify-content: space-between; /* This will place the date fields side by side */
+        width: 100%; /* Ensure the container takes full width */
+    }
 
+    .date-fields .box {
+        flex-basis: calc(50% - 10px); /* Assign half the width to each date field, minus the gap */
+        margin-bottom: 1rem; /* Space between this row and the next */
+    }
+}
 /* services */
 
 .services .box-container{
