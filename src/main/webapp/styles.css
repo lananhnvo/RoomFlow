@@ -203,70 +203,68 @@ section{
 
 /* Enhancing the Check Availability button */
 #checkAvailability {
-    background-color: var(--primary); /* Primary color for the button */
-    color: var(--white); /* Text color */
-    font-weight: 600; /* Makes the text slightly bolder */
-    letter-spacing: 1px; /* Slightly spaces out the letters */
-    border: none; /* Removes the default border */
-    cursor: pointer; /* Changes the cursor to a pointer to indicate it's clickable */
-    transition: background-color 0.3s ease; /* Smooth transition for the background color */
-    display: block; /* Ensures the button takes the full width */
-    width: 100%; /* Full width */
-    padding: 1.2rem; /* Ample padding for a larger click area */
-    margin-top: 2rem; /* Ensures there's space between the form fields and the button */
-    border-radius: 5px; /* Rounded corners */
+    background-color: var(--primary); 
+    color: var(--white); 
+    font-weight: 600; 
+    letter-spacing: 1px;
+    border: none; 
+    cursor: pointer; 
+    transition: background-color 0.3s ease; 
+    display: block; 
+    width: 100%; 
+    padding: 1.2rem; 
+    margin-top: 2rem; 
+    border-radius: 5px; 
 }
 
 #checkAvailability:hover {
-    background-color: var(--secondary); /* Changes background on hover for visual feedback */
+    background-color: var(--secondary); 
 }
 
 #resultsContainer {
-    margin-top: 20px; /* Adds space above the results for clarity */
+    margin-top: 20px;
     width: 100%;
 }
 
 .room {
-    font-size: 20px; /* Makes text larger */
-    margin-bottom: 20px; /* Adds space between results */
-    padding: 15px; /* Adds padding inside each result */
-    border: 1px solid #ccc; /* Adds a border around each result */
-    border-radius: 5px; /* Rounds the corners of the border */
+    font-size: 20px;
+    margin-bottom: 20px; 
+    padding: 15px; 
+    border: 1px solid #ccc; 
+    border-radius: 5px; 
 }
 
 .room-details {
-    margin-bottom: 10px; /* Adds space between the room details and the book now button */
+    margin-bottom: 10px; 
 }
 
 .btn, .book-now button {
-    background-color: var(--primary); /* Primary color for button background */
-    color: var(--white); /* White text */
-    padding: 1rem 3rem; /* Uniform padding */
-    font-size: 1.7rem; /* Consistent font size */
-    border-radius: .5rem; /* Rounded corners */
-    cursor: pointer; /* Cursor pointer to indicate clickable */
-    border: none; /* No border */
+    background-color: var(--primary); 
+    color: var(--white); 
+    padding: 1rem 3rem; 
+    font-size: 1.7rem; 
+    border-radius: .5rem; 
+    cursor: pointer; 
+    border: none; 
 }
 
 .btn:hover, .book-now button:hover {
-    background-color: var(--secondary); /* Secondary color on hover */
-    color: var(--white); /* Ensuring text color remains white for visibility */
+    background-color: var(--secondary); 
+    color: var(--white); 
 }
-
-
-
 /* end */
+
 /* Reservation */
 @media (min-width: 768px) {
     .date-fields {
         display: flex;
-        justify-content: space-between; /* This will place the date fields side by side */
-        width: 100%; /* Ensure the container takes full width */
+        justify-content: space-between; 
+        width: 100%; 
     }
 
     .date-fields .box {
-        flex-basis: calc(50% - 10px); /* Assign half the width to each date field, minus the gap */
-        margin-bottom: 1rem; /* Space between this row and the next */
+        flex-basis: calc(50% - 10px); 
+        margin-bottom: 1rem; 
     }
 }
 /* services */
@@ -351,7 +349,7 @@ section{
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    margin-top: 20px; /* Add space between buttons and the form */
+    margin-top: 20px; 
 }
 
 #editBookingForm input[type="text"],
@@ -582,26 +580,24 @@ section{
 
 }
 
-/* Add this to your styles.css or within a <style> tag in the <head> of your HTML document */
-
 .search-title {
     font-size: 14px;
     margin-top: 100px;
     margin-bottom: 10px;
     text-align: left;
-    padding-left: 00px; /* Adjust as necessary */
+    padding-left: 00px; 
 }
 
 .search-container {
     margin-top: 0px;
     text-align: left;
-    padding-left: 0px; /* Adjust as necessary */
+    padding-left: 0px; 
 }
 
 .search-container form {
     display: flex;
     align-items: center;
-    gap: 10px; /* Adjust as necessary */
+    gap: 10px; 
 }
 
 .search-container input[type="text"], .search-container button {
@@ -609,8 +605,6 @@ section{
     font-size: 14px;
 }
 
-/* Make sure the button is not hidden by any styles */
 button {
     cursor: pointer;
-    /* Add other styling as needed */
 }
