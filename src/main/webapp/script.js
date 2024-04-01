@@ -11,6 +11,13 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log("Script loaded and DOM fully loaded.");
     
     displayReservationDetails();
+    document.getElementById('editBooking').addEventListener('click', prepareEditForm);
+    document.getElementById('deleteBooking').addEventListener('click', function() {
+        const bookingId = document.getElementById('searchQuery').value;
+        deleteBooking(bookingId);
+    });
+    document.getElementById('saveChangesButton').addEventListener('click', saveEditedBooking); // Make sure 'saveChangesButton' is the correct ID
+});
     document.getElementById('hotelChain').addEventListener('change', updateAreas);
     document.getElementById('Category').addEventListener('change', updatePriceRanges);
     document.getElementById('checkAvailability').addEventListener('click', filterRooms);
@@ -37,7 +44,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
     });
-});
 
 
 document.getElementById('Category').addEventListener('change', function() { // Removed the extra space in 'Category '
@@ -366,8 +372,3 @@ window.bookRoom = function(roomId) {
     // Redirect to the reservation page with roomId, checkIn, and checkOut as URL parameters
     window.location.href = `reservation.html?roomId=${roomId}&checkIn=${checkInDate}&checkOut=${checkOutDate}`;
 };
-
-
-
-
-

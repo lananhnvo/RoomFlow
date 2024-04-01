@@ -34,17 +34,19 @@
 <!-- Booking Details and Actions -->
 <section class="edit-section">
     <div id="bookingDetails"></div>
-    <button id="editBooking" style="display:none;" onclick="prepareEditForm()">Edit Booking</button>
-    <button id="deleteBooking" style="display:none;" onclick="deleteBooking()">Delete Booking</button>
+    <button id="editBooking" onclick="prepareEditForm()">Edit Booking</button>
+    <button id="deleteBooking" onclick="deleteBooking()">Delete Booking</button>
 </section>
 
 <!-- Edit Booking Form (Hidden Initially) -->
-<form id="editBookingForm" style="display:none;">
+<form id="editBookingForm">
     <input type="text" id="editEmail" placeholder="Email">
     <input type="text" id="editBookingId" placeholder="Booking ID" readonly>
     <!-- Add more fields as needed -->
     <button type="button" onclick="saveEditedBooking()">Save Changes</button>
 </form>
+
+<script src="script.js"></script>
 
 </body>
 </html>
