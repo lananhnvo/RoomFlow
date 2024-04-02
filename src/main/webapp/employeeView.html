@@ -36,6 +36,8 @@
     <div id="bookingDetails"></div>
     <button id="editBooking" onclick="prepareEditForm()">Edit Booking</button>
     <button id="deleteBooking" onclick="deleteBooking()">Delete Booking</button>
+    <button id="checkIn" onclick="checkInBooking()">Check-In</button>
+
 </section>
 
 <!-- Edit Booking Form (Hidden Initially) -->
@@ -44,6 +46,9 @@
     <input type="text" id="editBookingId" placeholder="Booking ID" readonly>
     <button type="button" onclick="saveEditedBooking()">Save Changes</button>
 </form>
+
+<!-- Turn Booking Into Renting (Check-in customer) -->
+
 
 <script src="script.js"></script>
 
