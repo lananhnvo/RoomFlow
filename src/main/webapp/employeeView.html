@@ -25,23 +25,25 @@
 
 </header>
 
-<!-- Search Section -->
-<form id="searchForm">
-    <input type="text" placeholder="Booking ID" id="searchQuery">
-    <button type="button" onclick="searchBooking()">Search</button>
-</form>
+<section class="search">
+    <form id="searchForm">
+        <input type="text" placeholder="Booking ID" id="searchQuery">
+        <button type="button" onclick="searchBooking()">Search</button>
+    </form>
+</section>
+
 
 <!-- Booking Details and Actions -->
 <section class="edit-section">
-    <div id="bookingDetails"></div>
-    <button id="editBooking" onclick="prepareEditForm()">Edit Booking</button>
-    <button id="deleteBooking" onclick="deleteBooking()">Delete Booking</button>
-    <button id="checkIn" onclick="redirectToCheckIn()">Check-In</button>
+    <div id="bookingDetails"class="detail-item"></div>
+    <button id="editBooking" onclick="prepareEditForm()" style="display: none;">Edit Booking</button>
+    <button id="deleteBooking" onclick="deleteBooking()" style="display: none;">Delete Booking</button>
+    <button id="checkIn" onclick="redirectToCheckIn()" style="display: none;">Check-In</button>
 
 </section>
 
-<!-- Edit Booking Form (Hidden Initially) -->
-<form id="editBookingForm">
+<!-- Edit Booking Form (Initially Hidden) -->
+<form id="editBookingForm" style="display: none;">
     <input type="text" id="editEmail" placeholder="Email">
     <input type="text" id="editBookingId" placeholder="Booking ID" readonly>
     <button type="button" onclick="saveEditedBooking()">Save Changes</button>
@@ -49,7 +51,11 @@
 
 <!-- Turn Booking Into Renting (Check-in customer) -->
 
+<section class="footer">
 
+    <div class="credit">&copy; copyright @ 2024 by Lananh Vo, Vanessa Vo and Jessica Guo</div>
+  
+  </section>
 <script src="script.js"></script>
 
 </body>

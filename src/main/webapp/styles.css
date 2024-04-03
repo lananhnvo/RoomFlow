@@ -94,7 +94,7 @@ section{
 .header .navbar a{
     font-size: 1.7rem;
     color: var(--black);
-    margin: 0 1rem;
+    margin: 0 2rem;
 }
 
 .header .navbar a:hover{
@@ -309,18 +309,18 @@ section{
     width: 100%;
     padding: 10px;
     border: none;
-    background-color: #28a745;
+    background-color: #0077b6;
     color: white;
     cursor: pointer;
     border-radius: 5px;
 }
 
 #searchForm button:hover {
-    background-color: #218838;
+    background-color: #0077b6;
 }
 
 /* Edit section */
-.edit-section {
+.edit-section { 
     margin-bottom: 20px;
     background: #fff;
     padding: 20px;
@@ -362,7 +362,7 @@ section{
 }
 
 #editBookingForm button {
-    background-color: #28a745;
+    background-color: #0077b6;
     color: white;
     cursor: pointer;
 }
@@ -488,6 +488,7 @@ section{
 .login-container {
     width: 100%;
     max-width: 400px; 
+    padding: 20px;
 
     margin: auto; 
     background: var(--white);
@@ -592,6 +593,7 @@ section{
     margin-top: 0px;
     text-align: left;
     padding-left: 0px; 
+    max-width: 400 px;
 }
 
 .search-container form {
@@ -605,6 +607,105 @@ section{
     font-size: 14px;
 }
 
-button {
+
+/* Payment Form Styles */
+#paymentForm {
+    margin-top: 20px;
+}
+
+#paymentForm input, #paymentForm button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box; /* Makes sure padding does not affect total width */
+}
+
+#paymentForm button {
+    background-color: #0077b6;
+    color: white;
+    border: none;
     cursor: pointer;
+}
+
+#paymentForm button:hover {
+    background-color: #0077b6;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .header, .box {
+        flex-direction: column;
+    }
+}
+
+#editBookingForm {
+    display: none;
+}
+
+#editBooking, #deleteBooking, #checkIn {
+    display: none;
+}
+
+/* Apply a maximum width and center alignment to both sections */
+.search, .edit-section {
+    max-width: 900px; /* Use the same max-width for alignment */
+    margin: 20px auto; /* Centers the section */
+    display: block;
+}
+
+/* Further style the form within the search section for consistency */
+#searchForm {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+/* Style the inputs and buttons to fill the form space */
+#searchForm input,
+#editBookingForm input[type="text"],
+#editBookingForm button {
+    flex-grow: 1;
+    margin: 5px; /* Adjust margin as needed */
+    padding: 10px;
+    /* Other styles as necessary */
+}
+
+/* If the editBookingForm has different styles, make sure to reset them for alignment */
+/* Edit Booking Form styles */
+#editBookingForm {
+    display: none; /* Keep it hidden initially */
+    flex-direction: column; /* Stack the child elements vertically */
+    justify-content: center; /* Center children along the main axis */
+    align-items: center; /* Center children along the cross axis */
+    max-width: 900px; /* Max width as specified */
+    margin: 0 auto; /* Center the form in the container */
+    padding: 20px; /* Some padding around the form */
+    width: 100%; /* Use the full width of the parent container */
+}
+
+/* You may want to add a class that makes the form visible, e.g. 'active' */
+#editBookingForm.active {
+    display: flex; /* Make the form visible and laid out as a flex container */
+}
+
+.detail-item {
+    font-size: 16px; /* Or any size you prefer */
+    margin: 10px 0; /* Add some space between each detail item */
+    /* You can add more styling as needed, such as font weight, color, etc. */
+}
+
+/* If you want to specifically style the labels (like "Email:", "Booking ID:", etc.), you could add another class: */
+.detail-label {
+    font-weight: bold;
+    /* Additional styling for labels if needed */
+}
+.edit-section {
+    display: none;
+    /* Other styles... */
+}
+
+.checkin {
+    padding-top:100px;
 }

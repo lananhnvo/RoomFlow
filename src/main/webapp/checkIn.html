@@ -2,25 +2,43 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>checkIn</title>
+    <title>Check-In</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header class="header">
+<header class="header">
+    <a href="index.html" class="logo"><i class="fas fa-hotel"></i> <img src="images/logoTransparent.png" alt="RoomFlow Logo"></a>
+    <nav class="navbar">
+        <div class="right-aligned">
+            <a href="index.html">about</a>
+            <a href="book.html" class="btn">book room</a>
+            <a href="login.html" class="btn">log in</a>
+        </div>
+    </nav>
+    <div id="menu-btn" class="fas fa-bars"></div>
+</header>
+<section class="checkin">
+    <div class="box">
 
-        <a href="index.html" class="logo"> <i class="fas fa-hotel"></i> <img src="images/logoTransparent.png" alt="RoomFlow Logo"> </a>
-      
-        <nav class="navbar">
-          <div class="right-aligned">
-          <a href="index.html">about</a>
-          <a href="book.html" class="btn">book room</a>
-          <a href="login.html" class="btn">log in</a>
-          </div>
-        </nav>
-      
-        <div id="menu-btn" class="fas fa-bars"></div>
-      
-      </header>
-    <script src="script.js"></script>
+
+        <!-- Payment Information Section -->
+        <form id="paymentForm">
+            <h2>Payment Information:</h2>
+            <input type="text" name="cardNumber" placeholder="Card Number" required>
+            <input type="text" name="cardHolderName" placeholder="Card Holder Name" required>
+            <input type="month" name="expiryDate" placeholder="Expiry Date" required>
+            <input type="text" name="cvv" placeholder="CVV" required>        
+            <button id="confirmCheckIn">Confirm Check-In</button>
+        </form>
+    </div>
+</section>
+
+<section class="footer">
+
+    <div class="credit">&copy; copyright @ 2024 by Lananh Vo, Vanessa Vo and Jessica Guo</div>
+  
+  </section>
+  
+<script src="script.js"></script>
 </body>
 </html>

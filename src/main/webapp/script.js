@@ -7,8 +7,27 @@ const rooms = [
 ];
 
 document.addEventListener('DOMContentLoaded', function() {
-    console.log("Script loaded and DOM fully loaded.");
+    const paymentForm = document.getElementById('paymentForm');
+    if(paymentForm) {
+        paymentForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the form from submitting
+
+            // Perform validation check here
+            if (!validatePaymentForm()) {
+                alert('Please fill out all payment information fields.');
+                return; // Stop here if validation fails
+            }
+
+            // If validation passes, proceed with the booking confirmation
+            
+        });
+    }
     
+    const confirmCheckInBtn = document.getElementById('confirmCheckIn');
+    if(confirmCheckInBtn) {
+        confirmCheckInBtn.addEventListener('click', checkInBooking);
+    }
+    console.log("Script loaded and DOM fully loaded.");
     displayReservationDetails();
     document.getElementById('editBooking').addEventListener('click', prepareEditForm);
     document.getElementById('deleteBooking').addEventListener('click', function() {
@@ -55,7 +74,6 @@ document.getElementById('Category').addEventListener('change', function() {
 
     var selectedCategory = this.value;
     var priceRangesSelect = document.getElementById('priceRanges');
-    priceRangesSelect.innerHTML = '<option value="any">Any</option>';
 
     if (priceRange[selectedCategory]) { 
         priceRange[selectedCategory].forEach(function(price) {
@@ -225,6 +243,7 @@ function validateEmail(email) {
 
 function handleReservationSubmit(event) {
     event.preventDefault(); 
+    const queryParams = new URLSearchParams(window.location.search);
 
     const emailInput = document.getElementById('emailInput');
     const email = emailInput.value;
@@ -233,14 +252,16 @@ function handleReservationSubmit(event) {
         return;
     }
     const bookingId = generateBookingId();
-    saveReservationDetails(bookingId, email);
+    const roomId = queryParams.get('roomId');
+    saveReservationDetails(bookingId, email, roomId);   
     alert(`Your booking has been confirmed. Your Booking ID is: ${bookingId}. Please keep this ID for future reference. We have also sent a copy to your email! Thank you! - RoomFlow`);
     
 }
-function saveReservationDetails(bookingId, email) {
-    const reservationDetails = { email, bookingId };
+function saveReservationDetails(bookingId, email, roomId) {
+    const reservationDetails = { email, bookingId, roomId };
     localStorage.setItem(`booking_${bookingId}`, JSON.stringify(reservationDetails));
 }
+
 
 function generateBookingId() {
     const timestamp = Date.now().toString();
@@ -249,25 +270,48 @@ function generateBookingId() {
 }
 
 function searchBooking() {
-    const bookingId = document.getElementById('searchQuery').value;
-    const bookingDetails = localStorage.getItem(`booking_${bookingId}`);
+    const bookingIdInput = document.getElementById('searchQuery');
+    const bookingId = bookingIdInput.value;
+    const bookingDetailsJSON = localStorage.getItem(`booking_${bookingId}`);
     const detailsContainer = document.getElementById('bookingDetails');
+    document.getElementById('editBooking').style.display = 'none';
+    document.getElementById('deleteBooking').style.display = 'none';
+    document.getElementById('checkIn').style.display = 'none';
+    document.querySelector('.edit-section').style.display = 'block';
 
-    if (bookingDetails) {
-        const details = JSON.parse(bookingDetails);
-        detailsContainer.innerHTML = `
+    if (bookingDetailsJSON) {
+        const details = JSON.parse(bookingDetailsJSON);
+        let bookingInfoHTML = `
             <p>Email: ${details.email}</p>
             <p>Booking ID: ${details.bookingId}</p>
-            // Add more details as needed
+            <p>Room ID: ${details.roomId}</p>
         `;
+        const roomDetails = rooms.find(room => room.room_id.toString() === details.roomId);
+        if (roomDetails) {
+            bookingInfoHTML += `
+                <p>Hotel Name: ${roomDetails.hotelName}</p>
+                <p>Price: $${roomDetails.price}</p>
+                <p>Area: ${roomDetails.area}</p>
+                <p>Capacity: ${roomDetails.capacity}</p>
+                <p>Extendable: ${roomDetails.extendable === 'True' ? 'Yes' : 'No'}</p>
+                <p>TV: ${roomDetails.tv === 'True' ? 'Yes' : 'No'}</p>
+                <p>Fridge: ${roomDetails.fridge === 'True' ? 'Yes' : 'No'}</p>
+                <p>AC: ${roomDetails.ac === 'True' ? 'Yes' : 'No'}</p>
+            `;
+        }
+        detailsContainer.innerHTML = bookingInfoHTML;
         document.getElementById('editBooking').style.display = 'inline';
         document.getElementById('deleteBooking').style.display = 'inline';
+        document.getElementById('checkIn').style.display = 'inline';
     } else {
-        detailsContainer.innerHTML = `<p>No booking found with ID ${bookingId}.</p>`;
+        detailsContainer.innerHTML = `<p>No booking found with ${bookingId}.</p>`;
         document.getElementById('editBooking').style.display = 'none';
         document.getElementById('deleteBooking').style.display = 'none';
+        document.getElementById('checkIn').style.display = 'none';
     }
 }
+
+
 
 function editBooking(bookingId) {
     alert("Edit functionality for booking ID " + bookingId + " is not implemented in this demo.");
@@ -304,13 +348,10 @@ function saveEditedBooking() {
 
     document.addEventListener('DOMContentLoaded', function() {
         console.log("Script loaded and DOM fully loaded.");
-
+        displayBookingAndRoomDetails();
         displayReservationDetails();
         document.getElementById('editBooking').addEventListener('click', prepareEditForm);
-        document.getElementById('deleteBooking').addEventListener('click', function() {
-            const bookingId = document.getElementById('searchQuery').value;
-            deleteBooking(bookingId);
-        });
+        document.getElementById('deleteBooking').addEventListener('click', deleteBooking);
         document.getElementById('saveChangesButton').addEventListener('click', saveEditedBooking);
     });
     document.getElementById('hotelChain').addEventListener('change', updateAreas);
@@ -519,23 +560,37 @@ function saveEditedBooking() {
     }
 
     function handleReservationSubmit(event) {
-        event.preventDefault();
-
+        event.preventDefault(); // Prevent the form from submitting traditionally
+    
         const emailInput = document.getElementById('emailInput');
         const email = emailInput.value;
         if (!validateEmail(email)) {
             alert('Please enter a valid email address.');
             return;
         }
+    
+        // Generate a unique booking ID
         const bookingId = generateBookingId();
-        saveReservationDetails(bookingId, email);
+    
+        // Extract the room ID from the URL's query parameters
+        const queryParams = new URLSearchParams(window.location.search);
+        const roomId = queryParams.get('roomId'); // Ensure 'roomId' matches the query parameter name
+    
+        // If you're not already passing the room ID in the URL, you'll need to add that functionality
+    
+        // Save the reservation details, now including the room ID
+        saveReservationDetails(bookingId, email, roomId);
+    
+        // Notify the user of a successful booking
         alert(`Your booking has been confirmed. Your Booking ID is: ${bookingId}. Please keep this ID for future reference. We have also sent a copy to your email! Thank you! - RoomFlow`);
-
     }
-    function saveReservationDetails(bookingId, email) {
-        const reservationDetails = { email, bookingId };
+    
+    
+    function saveReservationDetails(bookingId, email, roomId) {
+        const reservationDetails = { email, bookingId, roomId };
         localStorage.setItem(`booking_${bookingId}`, JSON.stringify(reservationDetails));
     }
+    
 
     function generateBookingId() {
         const timestamp = Date.now().toString();
@@ -545,16 +600,33 @@ function saveEditedBooking() {
 
     function searchBooking() {
         const bookingId = document.getElementById('searchQuery').value;
-        const bookingDetails = localStorage.getItem(`booking_${bookingId}`);
+        const bookingDetailsJSON = localStorage.getItem(`booking_${bookingId}`);
         const detailsContainer = document.getElementById('bookingDetails');
-
-        if (bookingDetails) {
-            const details = JSON.parse(bookingDetails);
-            detailsContainer.innerHTML = `
-            <p>Email: ${details.email}</p>
-            <p>Booking ID: ${details.bookingId}</p>
-            // Add more details as needed
-        `;
+    
+        if (bookingDetailsJSON) {
+            const details = JSON.parse(bookingDetailsJSON);
+            let bookingInfoHTML = `
+                <p>Email: ${details.email}</p>
+                <p>Booking ID: ${details.bookingId}</p>
+            `;
+    
+            // Ensure roomId is defined in your booking details
+            if (details.roomId) {
+                bookingInfoHTML += `<p>Room ID: ${details.roomId}</p>`;
+                // Optionally, find room details and append them as well
+                const roomDetails = rooms.find(room => room.room_id.toString() === details.roomId);
+                if (roomDetails) {
+                    bookingInfoHTML += `
+                        <p>Hotel Name: ${roomDetails.hotelName}</p>
+                        <p>Price: ${roomDetails.price}</p>
+                        // Add more room details here
+                    `;
+                }
+            } else {
+                bookingInfoHTML += `<p>Room ID: Not available</p>`;
+            }
+    
+            detailsContainer.innerHTML = bookingInfoHTML;
             document.getElementById('editBooking').style.display = 'inline';
             document.getElementById('deleteBooking').style.display = 'inline';
         } else {
@@ -563,34 +635,22 @@ function saveEditedBooking() {
             document.getElementById('deleteBooking').style.display = 'none';
         }
     }
+    
+    
 
     function editBooking(bookingId) {
         alert("Edit functionality for booking ID " + bookingId + " is not implemented in this demo.");
     }
 
-    function deleteBooking(bookingId) {
-        if (confirm(`Are you sure you want to delete booking ID ${bookingId}?`)) {
-            localStorage.removeItem(`booking_${bookingId}`);
-            document.getElementById('bookingDetails').innerHTML = `<p>Booking ID ${bookingId} has been deleted.</p>`;
-            document.getElementById('editBooking').style.display = 'none';
-            document.getElementById('deleteBooking').style.display = 'none';
-        }
+// Modify your event listener setup to prevent the form from submitting traditionally
+document.addEventListener('DOMContentLoaded', function() {
+    const confirmCheckInBtn = document.getElementById('confirmCheckIn');
+    if(confirmCheckInBtn) {
+        confirmCheckInBtn.addEventListener('click', checkInBooking);
     }
+});
 
 
-// Function to mark a booking as checked-in
-    function checkInBooking(bookingId) {
-        const bookingDetails = JSON.parse(localStorage.getItem(`booking_${bookingId}`));
-        if (bookingDetails) {
-            // Assuming you add a 'status' field to your booking details
-            bookingDetails.status = 'Checked-In';
-            localStorage.setItem(`booking_${bookingId}`, JSON.stringify(bookingDetails));
-            alert('Customer has been checked in successfully.');
-            // Update UI accordingly
-        } else {
-            alert('No booking found with ID ' + bookingId + '.');
-        }
-    }
 
 // Example usage: Add an event listener for a Check-In button
     document.getElementById('checkInCustomer').addEventListener('click', function() {
@@ -610,12 +670,14 @@ function saveEditedBooking() {
             return;
         }
 
-        window.location.href = `reservation.html?roomId=${roomId}&checkIn=${checkInDate}&checkOut=${checkOutDate}`;
+        window.location.href = `reservation.html?roomId=${selectedRoomId}&otherParams=...`;
     };
     localStorage.setItem(`booking_${bookingId}`, JSON.stringify(updatedBookingDetails));
     alert('Booking updated successfully.');
     document.getElementById('editBookingForm').style.display = 'none';
     searchBooking(); 
+
+
 }
 
 document.addEventListener('DOMContentLoaded', displayReservationDetails);
@@ -642,11 +704,14 @@ function redirectToCheckIn() {
 }
 
 function deleteBooking(bookingId) {
-    if (confirm(`Are you sure you want to delete booking ID ${bookingId}?`)) {
-        localStorage.removeItem(`booking_${bookingId}`);
-        document.getElementById('bookingDetails').innerHTML = `<p>Booking ID ${bookingId} has been deleted.</p>`;
-        document.getElementById('editBooking').style.display = 'none';
-        document.getElementById('deleteBooking').style.display = 'none';
+    if(bookingId){
+        if (confirm(`Are you sure you want to delete booking ID ${bookingId}?`)) {
+            localStorage.removeItem(`booking_${bookingId}`);
+            document.getElementById('bookingDetails').innerHTML = `<p>Booking ID ${bookingId} has been deleted.</p>`;
+            document.getElementById('editBooking').style.display = 'none';
+            document.getElementById('deleteBooking').style.display = 'none';
+            document.getElementById('checkIn').style.display = 'none';
+        }
     }
 }
 
@@ -666,13 +731,163 @@ function prepareEditForm() {
 function saveEditedBooking() {
     const bookingId = document.getElementById('editBookingId').value;
     const editedEmail = document.getElementById('editEmail').value;
-    const updatedBookingDetails = {
-        bookingId: bookingId,
-        email: editedEmail,
-    };
-
-    localStorage.setItem(`booking_${bookingId}`, JSON.stringify(updatedBookingDetails));
+    
+    // Retrieve the existing booking details from localStorage
+    const bookingDetailsJSON = localStorage.getItem(`booking_${bookingId}`);
+    if (!bookingDetailsJSON) {
+        alert('No booking found to update.');
+        return;
+    }
+    const bookingDetails = JSON.parse(bookingDetailsJSON);
+    
+    // Update the email in the booking details while preserving other attributes
+    bookingDetails.email = editedEmail;
+    
+    // Save the updated booking details back to localStorage
+    localStorage.setItem(`booking_${bookingId}`, JSON.stringify(bookingDetails));
+    
     alert('Booking updated successfully.');
     document.getElementById('editBookingForm').style.display = 'none';
-    searchBooking();
+    searchBooking(); // Refresh the displayed booking details if necessary
 }
+function prepareEditForm() {
+    const bookingId = document.getElementById('searchQuery').value;
+    const bookingDetails = JSON.parse(localStorage.getItem(`booking_${bookingId}`));
+
+    if (bookingDetails) {
+        document.getElementById('editEmail').value = bookingDetails.email;
+        document.getElementById('editBookingId').value = bookingDetails.bookingId;
+        // Make the form visible
+        document.getElementById('editBookingForm').style.display = 'block';
+    } else {
+        alert('No booking found to edit.');
+    }
+}
+
+
+    function saveReservationDetails(bookingId, email, roomId) {
+        const reservationDetails = { email, bookingId, roomId, status: 'Booked' };
+        localStorage.setItem(`booking_${bookingId}`, JSON.stringify(reservationDetails));
+        alert('Booking saved successfully with status: Booked');
+    }
+
+    function displayRoomDetails() {
+        
+        // Ensure that the currentRoomId is not null or undefined
+        if (currentRoomId) {
+            // Find the room details from the global rooms array using currentRoomId
+            const roomDetails = rooms.find(room => room.room_id.toString() === currentRoomId.toString());
+    
+            // Prepare a container in your HTML for displaying room details
+            const roomDetailsContainer = document.getElementById('roomDetails');
+    
+            // Check if room details were found
+            if (roomDetails) {
+                // Construct the HTML content with room details
+                let roomInfoHTML = `
+                    <h3>Room Details</h3>
+                    <p>Hotel Chain: ${roomDetails.hotelChain}</p>
+                    <p>Hotel Name: ${roomDetails.hotelName}</p>
+                    <p>Price: ${roomDetails.price}</p>
+                    <p>Area: ${roomDetails.area}</p>
+                    <p>Capacity: ${roomDetails.capacity}</p>
+                    <p>Extendable: ${roomDetails.extendable === 'True' ? 'Yes' : 'No'}</p>
+                    <p>TV: ${roomDetails.tv === 'True' ? 'Yes' : 'No'}</p>
+                    <p>Fridge: ${roomDetails.fridge === 'True' ? 'Yes' : 'No'}</p>
+                    <p>AC: ${roomDetails.ac === 'True' ? 'Yes' : 'No'}</p>
+                `;
+    
+                // Display the room details in the designated container
+                roomDetailsContainer.innerHTML = roomInfoHTML;
+            } else {
+                // If no room details were found for the currentRoomId
+                roomDetailsContainer.innerHTML = `<p>No room details found for the selected booking.</p>`;
+            }
+        } else {
+            // If currentRoomId is null or undefined, indicating no booking or room is currently selected
+            alert('Please select a booking to view room details.');
+        }
+    }
+
+    function confirmCheckIn() {
+        const bookingId = document.getElementById('searchQuery').value; // Adjust based on where the booking ID is stored
+        if (bookingId) {
+            checkInBooking(bookingId);
+        } else {
+            alert('Please enter a Booking ID.');
+        }
+    }
+
+    function checkInBooking() {
+        // Example validation for payment information
+        const cardNumber = document.querySelector('input[name="cardNumber"]').value;
+        const cardHolderName = document.querySelector('input[name="cardHolderName"]').value;
+        const expiryDate = document.querySelector('input[name="expiryDate"]').value;
+        const cvv = document.querySelector('input[name="cvv"]').value;
+
+        // Basic validation: check if any of the fields are empty
+        if (!cardNumber || !cardHolderName || !expiryDate || !cvv) {
+            alert('Please fill out all payment information fields.');
+            return; // Stop the function if validation fails
+        }
+        else{
+        // Continue with fetching the booking ID and updating the booking status
+        const queryParams = new URLSearchParams(window.location.search);
+        const bookingId = queryParams.get('bookingId');
+        if (!bookingId) {
+            alert('No booking ID provided.');
+            return;
+        }
+
+        const bookingDetailsJSON = localStorage.getItem(`booking_${bookingId}`);
+        if (!bookingDetailsJSON) {
+            alert('No booking found with ID ' + bookingId + '.');
+            return;
+        }
+
+        const bookingDetails = JSON.parse(bookingDetailsJSON);
+        bookingDetails.status = 'Rented';
+        localStorage.setItem(`booking_${bookingId}`, JSON.stringify(bookingDetails));
+
+        alert('Check-In confirmed. Booking status updated to Rented.');
+    }
+}
+
+    function validatePaymentForm() {
+        const cardNumber = document.querySelector('input[name="cardNumber"]').value;
+        const cardHolderName = document.querySelector('input[name="cardHolderName"]').value;
+        const expiryDate = document.querySelector('input[name="expiryDate"]').value;
+        const cvv = document.querySelector('input[name="cvv"]').value;
+    
+        // Example simple validation: check if any of the fields are empty
+        return cardNumber && cardHolderName && expiryDate && cvv;
+    }
+
+    function validateEmployeeLogin() {
+        const username = document.querySelector('input[name="username"]').value;
+        const password = document.querySelector('input[name="password"]').value;
+      
+        // Replace with the actual employee's username and password
+        const validUsername = 'Employee144';
+        const validPassword = 'Pass123$';
+      
+        if (username === validUsername && password === validPassword) {
+          // Redirect to the employee view page if the credentials are valid
+          window.location.href = 'employeeView.html';
+        } else {
+          // Show an error message if the credentials are invalid
+          alert('Invalid username or password. Please try again.');
+        }
+      
+        // Prevent the form from submitting
+        return false;
+      }
+      
+      // Then, attach this function to your login form's onsubmit event
+      document.addEventListener('DOMContentLoaded', function() {
+        const loginForm = document.querySelector('.login form');
+        if (loginForm) {
+          loginForm.onsubmit = validateEmployeeLogin;
+        }
+      });
+    
