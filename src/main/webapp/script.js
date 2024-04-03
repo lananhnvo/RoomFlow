@@ -273,14 +273,6 @@ function editBooking(bookingId) {
     alert("Edit functionality for booking ID " + bookingId + " is not implemented in this demo.");
 }
 
-function deleteBooking(bookingId) {
-    if (confirm(`Are you sure you want to delete booking ID ${bookingId}?`)) {
-        localStorage.removeItem(`booking_${bookingId}`);
-        document.getElementById('bookingDetails').innerHTML = `<p>Booking ID ${bookingId} has been deleted.</p>`;
-        document.getElementById('editBooking').style.display = 'none';
-        document.getElementById('deleteBooking').style.display = 'none';
-    }
-}
 
 function prepareEditForm() {
     const bookingId = document.getElementById('searchQuery').value;
@@ -368,8 +360,7 @@ function saveEditedBooking() {
             });
         }
     });
-
-
+    
 // Functions
 
     function updateAreas() {
@@ -586,32 +577,6 @@ function saveEditedBooking() {
         }
     }
 
-    function prepareEditForm() {
-        const bookingId = document.getElementById('searchQuery').value;
-        const bookingDetails = JSON.parse(localStorage.getItem(`booking_${bookingId}`));
-
-        if (bookingDetails) {
-            document.getElementById('editEmail').value = bookingDetails.email;
-            document.getElementById('editBookingId').value = bookingDetails.bookingId;
-            document.getElementById('editBookingForm').style.display = 'block';
-        } else {
-            alert('No booking found to edit.');
-        }
-    }
-
-    function saveEditedBooking() {
-        const bookingId = document.getElementById('editBookingId').value;
-        const editedEmail = document.getElementById('editEmail').value;
-        const updatedBookingDetails = {
-            bookingId: bookingId,
-            email: editedEmail,
-        };
-
-        localStorage.setItem(`booking_${bookingId}`, JSON.stringify(updatedBookingDetails));
-        alert('Booking updated successfully.');
-        document.getElementById('editBookingForm').style.display = 'none';
-        searchBooking();
-    }
 
 // Function to mark a booking as checked-in
     function checkInBooking(bookingId) {
@@ -666,3 +631,48 @@ window.bookRoom = function(roomId) {
 
     window.location.href = `reservation.html?roomId=${roomId}&checkIn=${checkInDate}&checkOut=${checkOutDate}`;
 };
+
+function redirectToCheckIn() {
+    const bookingId = document.getElementById('searchQuery').value;
+    if (bookingId) {
+        window.location.href = `checkIn.html?bookingId=${bookingId}`;
+    } else {
+        alert('Please enter a Booking ID.');
+    }
+}
+
+function deleteBooking(bookingId) {
+    if (confirm(`Are you sure you want to delete booking ID ${bookingId}?`)) {
+        localStorage.removeItem(`booking_${bookingId}`);
+        document.getElementById('bookingDetails').innerHTML = `<p>Booking ID ${bookingId} has been deleted.</p>`;
+        document.getElementById('editBooking').style.display = 'none';
+        document.getElementById('deleteBooking').style.display = 'none';
+    }
+}
+
+function prepareEditForm() {
+    const bookingId = document.getElementById('searchQuery').value;
+    const bookingDetails = JSON.parse(localStorage.getItem(`booking_${bookingId}`));
+
+    if (bookingDetails) {
+        document.getElementById('editEmail').value = bookingDetails.email;
+        document.getElementById('editBookingId').value = bookingDetails.bookingId;
+        document.getElementById('editBookingForm').style.display = 'block';
+    } else {
+        alert('No booking found to edit.');
+    }
+}
+
+function saveEditedBooking() {
+    const bookingId = document.getElementById('editBookingId').value;
+    const editedEmail = document.getElementById('editEmail').value;
+    const updatedBookingDetails = {
+        bookingId: bookingId,
+        email: editedEmail,
+    };
+
+    localStorage.setItem(`booking_${bookingId}`, JSON.stringify(updatedBookingDetails));
+    alert('Booking updated successfully.');
+    document.getElementById('editBookingForm').style.display = 'none';
+    searchBooking();
+}
