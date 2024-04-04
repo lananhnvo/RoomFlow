@@ -1,9 +1,9 @@
 // Mock data representing rooms. Replace with actual data retrieval method.
 const rooms = [
-    { hotel_id: 94, room_id: 953, hotelChain: 'Mystica', hotelName: 'Celestial Harmony', price: '295.72', area: 'Sector of Serenity', capacity: 'triple', extendable: 'True', problem: 'False', tv: 'True', fridge: 'False', ac: 'False' },
-    { hotel_id: 37, room_id: 2, hotelChain: 'Celestia', hotelName: 'Grand Inn', price: '735.77', area: 'Lanxia', capacity: 'double', extendable: 'False', problem: 'False', tv: 'False', fridge: 'False', ac: 'False' },
-    { hotel_id: 47, room_id: 288, hotelChain: 'Emporia', hotelName: 'Grand Plaza', price: '197.97', area: 'Eternal Gardens', capacity: 'double', extendable: 'False', problem: 'True', tv: 'False', fridge: 'False', ac: 'True' }, 
-    { hotel_id: 47, room_id: 288, hotelChain: 'Emporia', hotelName: 'Grand Plaza', price: '197.97', area: 'Eternal Gardens', capacity: 'double', extendable: 'False', problem: 'False', tv: 'False', fridge: 'False', ac: 'True' }, 
+    { hotel_id: 94, room_id: 953, hotelChain: 'Mystica', hotelName: 'Celestial Harmony', price: '295.72', area: 'Sector of Serenity', capacity: 'triple', view: 'mountain', extendable: 'True', problem: 'False', tv: 'True', fridge: 'False', ac: 'False' },
+    { hotel_id: 37, room_id: 2, hotelChain: 'Celestia', hotelName: 'Grand Inn', price: '735.77', area: 'Lanxia', capacity: 'double', view: 'sea', extendable: 'False', problem: 'False', tv: 'False', fridge: 'False', ac: 'False' },
+    { hotel_id: 47, room_id: 288, hotelChain: 'Emporia', hotelName: 'Grand Plaza', price: '197.97', area: 'Eternal Gardens', capacity: 'double', view: 'sea', extendable: 'False', problem: 'True', tv: 'False', fridge: 'False', ac: 'True' }, 
+    { hotel_id: 47, room_id: 288, hotelChain: 'Emporia', hotelName: 'Grand Plaza', price: '197.97', area: 'Eternal Gardens', capacity: 'double', view: 'sea', extendable: 'False', problem: 'False', tv: 'False', fridge: 'False', ac: 'True' }, 
 ];
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -181,6 +181,7 @@ function displayFilteredRooms(filteredRooms) {
                 <p>Price: $${room.price}</p>
                 <p>Area: ${room.area}</p>
                 <p>Capacity: ${room.capacity}</p>
+                <p>View: ${room.view}</p>
                 <p>Extendable: ${room.extendable === 'True' ? 'Yes' : 'No'}</p>
                 <p>TV: ${room.tv === 'True' ? 'Yes' : 'No'}</p>
                 <p>Fridge: ${room.fridge === 'True' ? 'Yes' : 'No'}</p>
@@ -209,6 +210,7 @@ function displayReservationDetails() {
             document.getElementById('roomArea').textContent = roomDetails.area || 'Not available';
             document.getElementById('hotelChain').textContent = roomDetails.hotelChain || 'Not available';
             document.getElementById('roomCapacity').textContent = roomDetails.capacity || 'Not available';
+            document.getElementById('roomView').textContent = roomDetails.view || 'Not available';
             document.getElementById('roomExtendable').textContent = roomDetails.extendable === 'True' ? 'Yes' : 'No';
             document.getElementById('roomTv').textContent = roomDetails.tv === 'True' ? 'Yes' : 'No';
             document.getElementById('roomFridge').textContent = roomDetails.fridge === 'True' ? 'Yes' : 'No';
@@ -289,6 +291,7 @@ function searchBooking() {
                 <p>Price: $${roomDetails.price}</p>
                 <p>Area: ${roomDetails.area}</p>
                 <p>Capacity: ${roomDetails.capacity}</p>
+                <p>View: ${roomDetails.view}</p>
                 <p>Extendable: ${roomDetails.extendable === 'True' ? 'Yes' : 'No'}</p>
                 <p>TV: ${roomDetails.tv === 'True' ? 'Yes' : 'No'}</p>
                 <p>Fridge: ${roomDetails.fridge === 'True' ? 'Yes' : 'No'}</p>
@@ -336,10 +339,10 @@ function saveEditedBooking() {
     };
 // Mock data representing rooms. Replace with actual data retrieval method.
     const rooms = [
-        { hotel_id: 94, room_id: 953, hotelChain: 'Mystica', hotelName: 'Celestial Harmony', price: '295.72', area: 'Sector of Serenity', capacity: 'triple', extendable: 'True', problem: 'False', tv: 'True', fridge: 'False', ac: 'False' },
-        { hotel_id: 37, room_id: 2, hotelChain: 'Celestia', hotelName: 'Grand Inn', price: '735.77', area: 'Lanxia', capacity: 'double', extendable: 'False', problem: 'False', tv: 'False', fridge: 'False', ac: 'False' },
-        { hotel_id: 47, room_id: 288, hotelChain: 'Emporia', hotelName: 'Grand Plaza', price: '197.97', area: 'Eternal Gardens', capacity: 'double', extendable: 'False', problem: 'True', tv: 'False', fridge: 'False', ac: 'True' },
-        { hotel_id: 47, room_id: 288, hotelChain: 'Emporia', hotelName: 'Grand Plaza', price: '197.97', area: 'Eternal Gardens', capacity: 'double', extendable: 'False', problem: 'False', tv: 'False', fridge: 'False', ac: 'True' },
+        { hotel_id: 94, room_id: 953, hotelChain: 'Mystica', hotelName: 'Celestial Harmony', price: '295.72', area: 'Sector of Serenity', capacity: 'triple', view: 'mountain', extendable: 'True', problem: 'False', tv: 'True', fridge: 'False', ac: 'False' },
+        { hotel_id: 37, room_id: 2, hotelChain: 'Celestia', hotelName: 'Grand Inn', price: '735.77', area: 'Lanxia', capacity: 'double', view: 'sea',extendable: 'False', problem: 'False', tv: 'False', fridge: 'False', ac: 'False' },
+        { hotel_id: 47, room_id: 288, hotelChain: 'Emporia', hotelName: 'Grand Plaza', price: '197.97', area: 'Eternal Gardens', capacity: 'double', view: 'sea', extendable: 'False', problem: 'True', tv: 'False', fridge: 'False', ac: 'True' },
+        { hotel_id: 47, room_id: 288, hotelChain: 'Emporia', hotelName: 'Grand Plaza', price: '197.97', area: 'Eternal Gardens', capacity: 'double', view: 'sea',extendable: 'False', problem: 'False', tv: 'False', fridge: 'False', ac: 'True' },
     ];
 
     document.addEventListener('DOMContentLoaded', function() {
@@ -498,6 +501,7 @@ function saveEditedBooking() {
                 <p>Price: $${room.price}</p>
                 <p>Area: ${room.area}</p>
                 <p>Capacity: ${room.capacity}</p>
+                <p>View: ${room.view}</p>
                 <p>Extendable: ${room.extendable === 'True' ? 'Yes' : 'No'}</p>
                 <p>TV: ${room.tv === 'True' ? 'Yes' : 'No'}</p>
                 <p>Fridge: ${room.fridge === 'True' ? 'Yes' : 'No'}</p>
@@ -526,6 +530,7 @@ function saveEditedBooking() {
                 document.getElementById('roomArea').textContent = roomDetails.area || 'Not available';
                 document.getElementById('hotelChain').textContent = roomDetails.hotelChain || 'Not available';
                 document.getElementById('roomCapacity').textContent = roomDetails.capacity || 'Not available';
+                document.getElementById('roomView').textContent = roomDetails.view || 'Not available';
                 document.getElementById('roomExtendable').textContent = roomDetails.extendable === 'True' ? 'Yes' : 'No';
                 document.getElementById('roomTv').textContent = roomDetails.tv === 'True' ? 'Yes' : 'No';
                 document.getElementById('roomFridge').textContent = roomDetails.fridge === 'True' ? 'Yes' : 'No';
@@ -760,6 +765,7 @@ function saveEditedBooking() {
                     <p>Price: ${roomDetails.price}</p>
                     <p>Area: ${roomDetails.area}</p>
                     <p>Capacity: ${roomDetails.capacity}</p>
+                    <p>View: ${roomDetails.view}</p>
                     <p>Extendable: ${roomDetails.extendable === 'True' ? 'Yes' : 'No'}</p>
                     <p>TV: ${roomDetails.tv === 'True' ? 'Yes' : 'No'}</p>
                     <p>Fridge: ${roomDetails.fridge === 'True' ? 'Yes' : 'No'}</p>
