@@ -11,8 +11,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if(paymentForm) {
         paymentForm.addEventListener('submit', function(event) {
             event.preventDefault(); 
-
-            // Perform validation check here
             if (!validatePaymentForm()) {
                 alert('Please fill out all payment information fields.');
                 return; 
