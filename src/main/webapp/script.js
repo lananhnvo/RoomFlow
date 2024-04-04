@@ -330,20 +330,13 @@ function prepareEditForm() {
     }
 }
 
-function saveEditedBooking() {
-    const bookingId = document.getElementById('editBookingId').value;
-    const editedEmail = document.getElementById('editEmail').value;
-    const updatedBookingDetails = {
-        bookingId: bookingId,
-        email: editedEmail,
-    };
-// Mock data representing rooms. Replace with actual data retrieval method.
-    const rooms = [
-        { hotel_id: 94, room_id: 953, hotelChain: 'Mystica', hotelName: 'Celestial Harmony', price: '295.72', area: 'Sector of Serenity', capacity: 'triple', view: 'mountain', extendable: 'True', problem: 'False', tv: 'True', fridge: 'False', ac: 'False' },
-        { hotel_id: 37, room_id: 2, hotelChain: 'Celestia', hotelName: 'Grand Inn', price: '735.77', area: 'Lanxia', capacity: 'double', view: 'sea',extendable: 'False', problem: 'False', tv: 'False', fridge: 'False', ac: 'False' },
-        { hotel_id: 47, room_id: 288, hotelChain: 'Emporia', hotelName: 'Grand Plaza', price: '197.97', area: 'Eternal Gardens', capacity: 'double', view: 'sea', extendable: 'False', problem: 'True', tv: 'False', fridge: 'False', ac: 'True' },
-        { hotel_id: 47, room_id: 288, hotelChain: 'Emporia', hotelName: 'Grand Plaza', price: '197.97', area: 'Eternal Gardens', capacity: 'double', view: 'sea',extendable: 'False', problem: 'False', tv: 'False', fridge: 'False', ac: 'True' },
-    ];
+    function saveEditedBooking() {
+        const bookingId = document.getElementById('editBookingId').value;
+        const editedEmail = document.getElementById('editEmail').value;
+        const updatedBookingDetails = {
+            bookingId: bookingId,
+            email: editedEmail,
+        };
 
     document.addEventListener('DOMContentLoaded', function() {
         console.log("Script loaded and DOM fully loaded.");
@@ -561,7 +554,7 @@ function saveEditedBooking() {
     }
 
     function handleReservationSubmit(event) {
-        event.preventDefault(); // Prevent the form from submitting traditionally
+        event.preventDefault(); 
         const emailInput = document.getElementById('emailInput');
         const email = emailInput.value;
         if (!validateEmail(email)) {
@@ -820,7 +813,7 @@ function saveEditedBooking() {
 
         alert('Check-In confirmed. Booking status updated to Rented.');
     }
-}
+    }
 
     function validatePaymentForm() {
         const cardNumber = document.querySelector('input[name="cardNumber"]').value;
