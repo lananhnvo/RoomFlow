@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
 
-document.getElementById('Category').addEventListener('change', function() { 
+    document.getElementById('Category').addEventListener('change', function() { 
     var priceRange = {
         'any': ['$50 - $250', '$250 - $500', '$500 - $1000'],
         'Luxury': ['$500 - $1000'],
@@ -82,253 +82,263 @@ document.getElementById('Category').addEventListener('change', function() {
 
 // Functions
 
-function updateAreas() {
-    var areasByChain = {
-        'any': ['Lanxia', 'Dreamscape Delta', 'Mystic Mountain', 'Enchantment Valley', 'Elysium Estate', 'Tower of Hope', 'Eternal Gardens', 'Monument of Peace', 'Liberty Square', 'Archive of Ages', 'Palace of Peace', 'Garden of Harmony', 'Fortress of Fortitude', 'Temple of Tranquility', 'Garden of Harmony', 'Realm of Bliss', 'District of Delight', 'Sector of Serenity', 'Province of Pleasure'],
-        'Celestia': ['Lanxia', 'Dreamscape Delta', 'Mystic Mountain', 'Enchantment Valley', 'Elysium Estate'],
-        'Emporia': ['Tower of Hope', 'Eternal Gardens', 'Monument of Peace', 'Liberty Square'],
-        'Jade Empire': ['Archive of Ages', 'Palace of Peace', 'Garden of Harmony', 'Fortress of Fortitude'],
-        'Lotus Luxe': ['Palace of Peace', 'Fortress of Fortitude', 'Temple of Tranquility', 'Garden of Harmony'],
-        'Mystica': ['Realm of Bliss', 'District of Delight', 'Sector of Serenity', 'Province of Pleasure']
-    };
-
-    var hotelChainOption = document.getElementById('hotelChain').selectedOptions[0].textContent;
-    var hotelChainName = hotelChainOption.split(' (')[0].trim(); 
-    var areaSelect = document.getElementById('area');
-    areaSelect.innerHTML = ''; 
-
-    console.log('Hotel Chain Selected:', hotelChainName); 
-
-    if (areasByChain.hasOwnProperty(hotelChainName)) {
-        areasByChain[hotelChainName].forEach(function(area) {
-            areaSelect.add(new Option(area, area));
-        });
-    } else {
-        console.error('Selected hotel chain is not defined in areas:', hotelChainName);
-    }
-}
-
-
-function updatePriceRanges() {
-    var selectedCategory = document.getElementById('Category').value;
-    var priceRangesSelect = document.getElementById('priceRanges');
-    
-    priceRangesSelect.innerHTML = '';
-
-    if (selectedCategory === 'Mid-range') {
-        // If "Mid-range" is selected, only add "$250 - $500"
-        var option = new Option('$250 - $500', '$250 - $500');
-        priceRangesSelect.add(option);
-    } else if (selectedCategory === 'any') {
-        // If "Any" is selected, reset to showing only "Any" option
-        var anyOption = new Option('Any', 'any');
-        priceRangesSelect.add(anyOption);
-    } else {
-        var priceRangesByCategory = {
-            'Luxury': ['$500 - $1000'],
-            'Economy': ['$50 - $250']
+    function updateAreas() {
+        var areasByChain = {
+            'any': ['Lanxia', 'Dreamscape Delta', 'Mystic Mountain', 'Enchantment Valley', 'Elysium Estate', 'Tower of Hope', 'Eternal Gardens', 'Monument of Peace', 'Liberty Square', 'Archive of Ages', 'Palace of Peace', 'Garden of Harmony', 'Fortress of Fortitude', 'Temple of Tranquility', 'Garden of Harmony', 'Realm of Bliss', 'District of Delight', 'Sector of Serenity', 'Province of Pleasure'],
+            'Celestia': ['Lanxia', 'Dreamscape Delta', 'Mystic Mountain', 'Enchantment Valley', 'Elysium Estate'],
+            'Emporia': ['Tower of Hope', 'Eternal Gardens', 'Monument of Peace', 'Liberty Square'],
+            'Jade Empire': ['Archive of Ages', 'Palace of Peace', 'Garden of Harmony', 'Fortress of Fortitude'],
+            'Lotus Luxe': ['Palace of Peace', 'Fortress of Fortitude', 'Temple of Tranquility', 'Garden of Harmony'],
+            'Mystica': ['Realm of Bliss', 'District of Delight', 'Sector of Serenity', 'Province of Pleasure']
         };
-        
-        var ranges = priceRangesByCategory[selectedCategory];
-        if (ranges) {
-            ranges.forEach(function(price) {
-                var option = new Option(price, price);
-                priceRangesSelect.add(option);
+
+        var hotelChainOption = document.getElementById('hotelChain').selectedOptions[0].textContent;
+        var hotelChainName = hotelChainOption.split(' (')[0].trim(); 
+        var areaSelect = document.getElementById('area');
+        areaSelect.innerHTML = ''; 
+
+        console.log('Hotel Chain Selected:', hotelChainName); 
+
+        if (areasByChain.hasOwnProperty(hotelChainName)) {
+            areasByChain[hotelChainName].forEach(function(area) {
+                areaSelect.add(new Option(area, area));
             });
         } else {
+            console.error('Selected hotel chain is not defined in areas:', hotelChainName);
+        }
+    }
+
+
+    function updatePriceRanges() {
+        var selectedCategory = document.getElementById('Category').value;
+        var priceRangesSelect = document.getElementById('priceRanges');
+        
+        priceRangesSelect.innerHTML = '';
+
+        if (selectedCategory === 'Mid-range') {
+            // If "Mid-range" is selected, only add "$250 - $500"
+            var option = new Option('$250 - $500', '$250 - $500');
+            priceRangesSelect.add(option);
+        } else if (selectedCategory === 'any') {
+            // If "Any" is selected, reset to showing only "Any" option
             var anyOption = new Option('Any', 'any');
             priceRangesSelect.add(anyOption);
-        }
-    }
-}
-
-document.getElementById('Category').addEventListener('change', updatePriceRanges);
-
-
-function filterRooms(event) {
-    event.preventDefault(); 
-    var hotelChainSelectedOption = document.getElementById('hotelChain').selectedOptions[0].value;
-    var areaSelectedOption = document.getElementById('area').value;
-    var priceRangeSelectedOption = document.getElementById('priceRanges').value;
-    var capacitySelectedOption = document.getElementById('roomCapacity').value;
-    var priceBounds = priceRangeSelectedOption === 'any' ? [0, Infinity] : priceRangeSelectedOption.split('-').map(function(price) {
-
-        return parseFloat(price.replace('$', '').trim());
-    });
-
-    var filteredRooms = rooms.filter(function(room) {
-
-        var roomPrice = parseFloat(room.price.replace('$', ''));
-        return (hotelChainSelectedOption === 'any' || room.hotelChain === hotelChainSelectedOption) &&
-               (areaSelectedOption === 'any' || room.area === areaSelectedOption) &&
-               (capacitySelectedOption === 'any' || room.capacity === capacitySelectedOption) &&
-               (priceRangeSelectedOption === 'any' || (roomPrice >= priceBounds[0] && roomPrice <= priceBounds[1])) &&
-               room.problem !== 'True'; 
-    });
-    displayFilteredRooms(filteredRooms);
-}
-
-function displayFilteredRooms(filteredRooms) {
-    const resultsContainer = document.getElementById('resultsContainer');
-    resultsContainer.innerHTML = '';
-
-    filteredRooms.forEach(room => {
-        const roomElement = document.createElement('div');
-        roomElement.className = 'room';
-        roomElement.innerHTML = `
-             <div class="room-details">
-                <h3>${room.hotelName} (${room.hotelChain})</h3>
-                <p>Price: $${room.price}</p>
-                <p>Area: ${room.area}</p>
-                <p>Capacity: ${room.capacity}</p>
-                <p>View: ${room.view}</p>
-                <p>Extendable: ${room.extendable === 'True' ? 'Yes' : 'No'}</p>
-                <p>TV: ${room.tv === 'True' ? 'Yes' : 'No'}</p>
-                <p>Fridge: ${room.fridge === 'True' ? 'Yes' : 'No'}</p>
-                <p>AC: ${room.ac === 'True' ? 'Yes' : 'No'}</p>
-            </div>
-            <div class="book-now">
-                <button type='button' onclick="bookRoom('${room.room_id}')">Book Now</button>
-            </div>
-        `;
-        resultsContainer.appendChild(roomElement);
-    });
-}
-
-function displayReservationDetails() {
-    const queryParams = new URLSearchParams(window.location.search);
-    const roomId = queryParams.get('roomId');
-    const checkInDate = queryParams.get('checkIn');
-    const checkOutDate = queryParams.get('checkOut');
-    if (checkInDate) document.querySelector('input[name="check-in"]').value = checkInDate;
-    if (checkOutDate) document.querySelector('input[name="check-out"]').value = checkOutDate;
-    if (roomId) {
-        const roomDetails = rooms.find(room => room.room_id.toString() === roomId);
-        if (roomDetails) {
-            document.getElementById('hotelName').textContent = roomDetails.hotelName || 'Not available';
-            document.getElementById('roomPrice').textContent = `$${roomDetails.price}` || 'Not available';
-            document.getElementById('roomArea').textContent = roomDetails.area || 'Not available';
-            document.getElementById('hotelChain').textContent = roomDetails.hotelChain || 'Not available';
-            document.getElementById('roomCapacity').textContent = roomDetails.capacity || 'Not available';
-            document.getElementById('roomView').textContent = roomDetails.view || 'Not available';
-            document.getElementById('roomExtendable').textContent = roomDetails.extendable === 'True' ? 'Yes' : 'No';
-            document.getElementById('roomTv').textContent = roomDetails.tv === 'True' ? 'Yes' : 'No';
-            document.getElementById('roomFridge').textContent = roomDetails.fridge === 'True' ? 'Yes' : 'No';
-            document.getElementById('roomAc').textContent = roomDetails.ac === 'True' ? 'Yes' : 'No';
-            document.querySelector('input[name="check-in"]').value = checkInDate || '';
-            document.querySelector('input[name="check-out"]').value = checkOutDate || '';
-            document.getElementById('reservationForm').addEventListener('submit', handleReservationSubmit);
         } else {
-            console.error('No details found for room ID:', roomId);
+            var priceRangesByCategory = {
+                'Luxury': ['$500 - $1000'],
+                'Economy': ['$50 - $250']
+            };
+            
+            var ranges = priceRangesByCategory[selectedCategory];
+            if (ranges) {
+                ranges.forEach(function(price) {
+                    var option = new Option(price, price);
+                    priceRangesSelect.add(option);
+                });
+            } else {
+                var anyOption = new Option('Any', 'any');
+                priceRangesSelect.add(anyOption);
+            }
         }
-    } else {
-        console.error('No room ID specified in the URL.');
     }
-}
-function validateEmailAndSubmit(event) {
-    const emailInput = document.getElementById('emailInput');
-    const email = emailInput.value;
-    if (!validateEmail(email)) {
-        event.preventDefault();
-        alert('Please enter a valid email address.');
+
+    document.getElementById('Category').addEventListener('change', updatePriceRanges);
+
+
+    function filterRooms(event) {
+        event.preventDefault(); 
+        var hotelChainSelectedOption = document.getElementById('hotelChain').selectedOptions[0].value;
+        var areaSelectedOption = document.getElementById('area').value;
+        var priceRangeSelectedOption = document.getElementById('priceRanges').value;
+        var capacitySelectedOption = document.getElementById('roomCapacity').value;
+        var priceBounds = priceRangeSelectedOption === 'any' ? [0, Infinity] : priceRangeSelectedOption.split('-').map(function(price) {
+
+            return parseFloat(price.replace('$', '').trim());
+        });
+
+        var filteredRooms = rooms.filter(function(room) {
+
+            var roomPrice = parseFloat(room.price.replace('$', ''));
+            return (hotelChainSelectedOption === 'any' || room.hotelChain === hotelChainSelectedOption) &&
+                (areaSelectedOption === 'any' || room.area === areaSelectedOption) &&
+                (capacitySelectedOption === 'any' || room.capacity === capacitySelectedOption) &&
+                (priceRangeSelectedOption === 'any' || (roomPrice >= priceBounds[0] && roomPrice <= priceBounds[1])) &&
+                room.problem !== 'True'; 
+        });
+        displayFilteredRooms(filteredRooms);
     }
-}
 
-function validateEmail(email) {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return regex.test(email);
-}
+    function displayFilteredRooms(filteredRooms) {
+        const resultsContainer = document.getElementById('resultsContainer');
+        resultsContainer.innerHTML = '';
 
-function handleReservationSubmit(event) {
-    event.preventDefault(); 
-    const queryParams = new URLSearchParams(window.location.search);
-
-    const emailInput = document.getElementById('emailInput');
-    const email = emailInput.value;
-    if (!validateEmail(email)) {
-        alert('Please enter a valid email address.');
-        return;
-    }
-    const bookingId = generateBookingId();
-    const roomId = queryParams.get('roomId');
-    saveReservationDetails(bookingId, email, roomId);   
-    alert(`Your booking has been confirmed. Your Booking ID is: ${bookingId}. Please keep this ID for future reference. We have also sent a copy to your email! Thank you! - RoomFlow`);
-    
-}
-function saveReservationDetails(bookingId, email, roomId) {
-    const reservationDetails = { email, bookingId, roomId };
-    localStorage.setItem(`booking_${bookingId}`, JSON.stringify(reservationDetails));
-}
-
-
-function generateBookingId() {
-    const timestamp = Date.now().toString();
-    const randomComponent = Math.floor(Math.random() * 1000).toString();
-    return `BID-${timestamp}-${randomComponent}`;
-}
-
-function searchBooking() {
-    const bookingIdInput = document.getElementById('searchQuery');
-    const bookingId = bookingIdInput.value;
-    const bookingDetailsJSON = localStorage.getItem(`booking_${bookingId}`);
-    const detailsContainer = document.getElementById('bookingDetails');
-    document.getElementById('editBooking').style.display = 'none';
-    document.getElementById('deleteBooking').style.display = 'none';
-    document.getElementById('checkIn').style.display = 'none';
-    document.querySelector('.edit-section').style.display = 'block';
-
-    if (bookingDetailsJSON) {
-        const details = JSON.parse(bookingDetailsJSON);
-        let bookingInfoHTML = `
-            <p>Email: ${details.email}</p>
-            <p>Booking ID: ${details.bookingId}</p>
-            <p>Room ID: ${details.roomId}</p>
-        `;
-        const roomDetails = rooms.find(room => room.room_id.toString() === details.roomId);
-        if (roomDetails) {
-            bookingInfoHTML += `
-                <p>Hotel Name: ${roomDetails.hotelName}</p>
-                <p>Price: $${roomDetails.price}</p>
-                <p>Area: ${roomDetails.area}</p>
-                <p>Capacity: ${roomDetails.capacity}</p>
-                <p>View: ${roomDetails.view}</p>
-                <p>Extendable: ${roomDetails.extendable === 'True' ? 'Yes' : 'No'}</p>
-                <p>TV: ${roomDetails.tv === 'True' ? 'Yes' : 'No'}</p>
-                <p>Fridge: ${roomDetails.fridge === 'True' ? 'Yes' : 'No'}</p>
-                <p>AC: ${roomDetails.ac === 'True' ? 'Yes' : 'No'}</p>
+        filteredRooms.forEach(room => {
+            const roomElement = document.createElement('div');
+            roomElement.className = 'room';
+            roomElement.innerHTML = `
+                <div class="room-details">
+                    <h3>${room.hotelName} (${room.hotelChain})</h3>
+                    <p>Price: $${room.price}</p>
+                    <p>Area: ${room.area}</p>
+                    <p>Capacity: ${room.capacity}</p>
+                    <p>View: ${room.view}</p>
+                    <p>Extendable: ${room.extendable === 'True' ? 'Yes' : 'No'}</p>
+                    <p>TV: ${room.tv === 'True' ? 'Yes' : 'No'}</p>
+                    <p>Fridge: ${room.fridge === 'True' ? 'Yes' : 'No'}</p>
+                    <p>AC: ${room.ac === 'True' ? 'Yes' : 'No'}</p>
+                </div>
+                <div class="book-now">
+                    <button type='button' onclick="bookRoom('${room.room_id}')">Book Now</button>
+                </div>
             `;
+            resultsContainer.appendChild(roomElement);
+        });
+    }
+
+    function displayReservationDetails() {
+        const queryParams = new URLSearchParams(window.location.search);
+        const roomId = queryParams.get('roomId');
+        const checkInDate = queryParams.get('checkIn');
+        const checkOutDate = queryParams.get('checkOut');
+        if (checkInDate) document.querySelector('input[name="check-in"]').value = checkInDate;
+        if (checkOutDate) document.querySelector('input[name="check-out"]').value = checkOutDate;
+        if (roomId) {
+            const roomDetails = rooms.find(room => room.room_id.toString() === roomId);
+            if (roomDetails) {
+                document.getElementById('hotelName').textContent = roomDetails.hotelName || 'Not available';
+                document.getElementById('roomPrice').textContent = `$${roomDetails.price}` || 'Not available';
+                document.getElementById('roomArea').textContent = roomDetails.area || 'Not available';
+                document.getElementById('hotelChain').textContent = roomDetails.hotelChain || 'Not available';
+                document.getElementById('roomCapacity').textContent = roomDetails.capacity || 'Not available';
+                document.getElementById('roomView').textContent = roomDetails.view || 'Not available';
+                document.getElementById('roomExtendable').textContent = roomDetails.extendable === 'True' ? 'Yes' : 'No';
+                document.getElementById('roomTv').textContent = roomDetails.tv === 'True' ? 'Yes' : 'No';
+                document.getElementById('roomFridge').textContent = roomDetails.fridge === 'True' ? 'Yes' : 'No';
+                document.getElementById('roomAc').textContent = roomDetails.ac === 'True' ? 'Yes' : 'No';
+                document.querySelector('input[name="check-in"]').value = checkInDate || '';
+                document.querySelector('input[name="check-out"]').value = checkOutDate || '';
+                document.getElementById('reservationForm').addEventListener('submit', handleReservationSubmit);
+            } else {
+                console.error('No details found for room ID:', roomId);
+            }
+        } else {
+            console.error('No room ID specified in the URL.');
         }
-        detailsContainer.innerHTML = bookingInfoHTML;
-        document.getElementById('editBooking').style.display = 'inline';
-        document.getElementById('deleteBooking').style.display = 'inline';
-        document.getElementById('checkIn').style.display = 'inline';
-    } else {
-        detailsContainer.innerHTML = `<p>No booking found with ${bookingId}.</p>`;
+    }
+    function validateEmailAndSubmit(event) {
+        const emailInput = document.getElementById('emailInput');
+        const email = emailInput.value;
+        if (!validateEmail(email)) {
+            event.preventDefault();
+            alert('Please enter a valid email address.');
+        }
+    }
+
+    function validateEmail(email) {
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return regex.test(email);
+    }
+
+    function handleReservationSubmit(event) {
+        event.preventDefault(); 
+        
+        const emailInput = document.getElementById('emailInput');
+        const nameInput = document.getElementById('nameInput'); 
+        const email = emailInput.value;
+        const name = nameInput.value; 
+
+        if (!validateEmail(email)) {
+            alert('Please enter a valid email address.');
+            return;
+        }
+
+        if (name.trim() === '') { 
+            alert('Please enter your name.'); 
+            return; 
+        }
+
+
+        const bookingId = generateBookingId();
+        const queryParams = new URLSearchParams(window.location.search);
+        const roomId = queryParams.get('roomId');
+        saveReservationDetails(bookingId, email, roomId);   
+        alert(`Your booking has been confirmed. Your Booking ID is: ${bookingId}. Please keep this ID for future reference. We have also sent a copy to your email! Thank you! - RoomFlow`);
+    }
+
+    function saveReservationDetails(bookingId, email, roomId) {
+        const reservationDetails = { email, bookingId, roomId };
+        localStorage.setItem(`booking_${bookingId}`, JSON.stringify(reservationDetails));
+    }
+
+
+    function generateBookingId() {
+        const timestamp = Date.now().toString();
+        const randomComponent = Math.floor(Math.random() * 1000).toString();
+        return `BID-${timestamp}-${randomComponent}`;
+    }
+
+    function searchBooking() {
+        const bookingIdInput = document.getElementById('searchQuery');
+        const bookingId = bookingIdInput.value;
+        const bookingDetailsJSON = localStorage.getItem(`booking_${bookingId}`);
+        const detailsContainer = document.getElementById('bookingDetails');
         document.getElementById('editBooking').style.display = 'none';
         document.getElementById('deleteBooking').style.display = 'none';
         document.getElementById('checkIn').style.display = 'none';
+        document.querySelector('.edit-section').style.display = 'block';
+
+        if (bookingDetailsJSON) {
+            const details = JSON.parse(bookingDetailsJSON);
+            let bookingInfoHTML = `
+                <p>Email: ${details.email}</p>
+                <p>Booking ID: ${details.bookingId}</p>
+                <p>Room ID: ${details.roomId}</p>
+            `;
+            const roomDetails = rooms.find(room => room.room_id.toString() === details.roomId);
+            if (roomDetails) {
+                bookingInfoHTML += `
+                    <p>Hotel Name: ${roomDetails.hotelName}</p>
+                    <p>Price: $${roomDetails.price}</p>
+                    <p>Area: ${roomDetails.area}</p>
+                    <p>Capacity: ${roomDetails.capacity}</p>
+                    <p>View: ${roomDetails.view}</p>
+                    <p>Extendable: ${roomDetails.extendable === 'True' ? 'Yes' : 'No'}</p>
+                    <p>TV: ${roomDetails.tv === 'True' ? 'Yes' : 'No'}</p>
+                    <p>Fridge: ${roomDetails.fridge === 'True' ? 'Yes' : 'No'}</p>
+                    <p>AC: ${roomDetails.ac === 'True' ? 'Yes' : 'No'}</p>
+                `;
+            }
+            detailsContainer.innerHTML = bookingInfoHTML;
+            document.getElementById('editBooking').style.display = 'inline';
+            document.getElementById('deleteBooking').style.display = 'inline';
+            document.getElementById('checkIn').style.display = 'inline';
+        } else {
+            detailsContainer.innerHTML = `<p>No booking found with ${bookingId}.</p>`;
+            document.getElementById('editBooking').style.display = 'none';
+            document.getElementById('deleteBooking').style.display = 'none';
+            document.getElementById('checkIn').style.display = 'none';
+        }
+}
+
+
+
+    function editBooking(bookingId) {
+        alert("Edit functionality for booking ID " + bookingId + " is not implemented in this demo.");
     }
-}
 
 
+    function prepareEditForm() {
+        const bookingId = document.getElementById('searchQuery').value;
+        const bookingDetails = JSON.parse(localStorage.getItem(`booking_${bookingId}`));
 
-function editBooking(bookingId) {
-    alert("Edit functionality for booking ID " + bookingId + " is not implemented in this demo.");
-}
-
-
-function prepareEditForm() {
-    const bookingId = document.getElementById('searchQuery').value;
-    const bookingDetails = JSON.parse(localStorage.getItem(`booking_${bookingId}`));
-
-    if (bookingDetails) {
-        document.getElementById('editEmail').value = bookingDetails.email;
-        document.getElementById('editBookingId').value = bookingDetails.bookingId;
-        document.getElementById('editBookingForm').style.display = 'block';
-    } else {
-        alert('No booking found to edit.');
+        if (bookingDetails) {
+            document.getElementById('editEmail').value = bookingDetails.email;
+            document.getElementById('editBookingId').value = bookingDetails.bookingId;
+            document.getElementById('editBookingForm').style.display = 'block';
+        } else {
+            alert('No booking found to edit.');
+        }
     }
-}
 
     function saveEditedBooking() {
         const bookingId = document.getElementById('editBookingId').value;
